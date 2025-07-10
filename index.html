@@ -6,28 +6,46 @@
     <title>SNEYDER ESTUDIO - Diseño, Programación e Inversiones</title>
     
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
-    <!-- Google Fonts: Inter -->
+    <!-- Google Fonts: Inter & Orbitron -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* Estilos base */
+        :root {
+            --primary-blue: #007cf0;
+            --secondary-blue: #00dfd8;
+            --accent-purple: #7c3aed;
+            --dark-bg: #050816;
+            --darker-bg: #0a0a0a;
+            --card-bg: rgba(17, 24, 39, 0.6);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #050816; /* Un negro azulado oscuro */
+            background: var(--dark-bg);
             color: #e0e0e0;
-            position: relative; /* Necesario para el pseudo-elemento */
+            position: relative;
             overflow-x: hidden;
         }
 
-        /* Imagen de adorno como fondo con opacidad */
+        .font-orbitron {
+            font-family: 'Orbitron', monospace;
+        }
+
+        /* Fondo animado mejorado */
         body::before {
             content: '';
             position: fixed;
@@ -35,255 +53,914 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://i.postimg.cc/1tSTS9fD/endless-Y8-YQpjhf-H60-IWQDkm-T.png');
-            background-size: cover;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(0, 124, 240, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 223, 216, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.05) 0%, transparent 50%),
+                url('https://i.postimg.cc/1tSTS9fD/endless-Y8-YQpjhf-H60-IWQDkm-T.png');
+            background-size: 100% 100%, 100% 100%, 100% 100%, cover;
             background-position: center;
-            opacity: 0.05; /* Opacidad muy baja para que sea sutil */
-            z-index: -1; /* Detrás de todo el contenido */
+            opacity: 0.3;
+            z-index: -1;
+            animation: backgroundMove 20s ease-in-out infinite;
         }
 
-        /* Efecto de gradiente de neón para bordes */
+        @keyframes backgroundMove {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-10px) translateY(-5px); }
+            50% { transform: translateX(10px) translateY(5px); }
+            75% { transform: translateX(-5px) translateY(10px); }
+        }
+
+        /* Efectos de neón mejorados */
         .neon-border {
-            border: 2px solid;
-            border-image-slice: 1;
-            border-image-source: linear-gradient(to right, #007cf0, #00dfd8);
+            border: 2px solid transparent;
+            background: linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+                       linear-gradient(45deg, var(--primary-blue), var(--secondary-blue), var(--accent-purple)) border-box;
+            position: relative;
+            overflow: hidden;
         }
-        
+
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .neon-border:hover::before {
+            left: 100%;
+        }
+
         .neon-shadow {
-            box-shadow: 0 0 5px #007cf0, 0 0 15px #007cf0, 0 0 30px #007cf0;
+            box-shadow: 
+                0 0 20px rgba(0, 124, 240, 0.3),
+                0 0 40px rgba(0, 124, 240, 0.2),
+                0 0 80px rgba(0, 124, 240, 0.1);
         }
 
-        /* Animación de fondo */
-        .background-animate {
-            background-size: 400%;
-            background-image: linear-gradient(45deg, #050816 0%, #0d122b 50%, #050816 100%);
-            animation: gradientAnimation 15s ease infinite;
+        .neon-shadow:hover {
+            box-shadow: 
+                0 0 30px rgba(0, 124, 240, 0.5),
+                0 0 60px rgba(0, 124, 240, 0.3),
+                0 0 120px rgba(0, 124, 240, 0.2);
         }
 
-        @keyframes gradientAnimation {
+        .text-neon {
+            text-shadow:
+                0 0 5px rgba(0, 124, 240, 0.8),
+                0 0 10px rgba(0, 124, 240, 0.6),
+                0 0 20px rgba(0, 124, 240, 0.4),
+                0 0 40px rgba(0, 124, 240, 0.2);
+        }
+
+        /* Animaciones personalizadas */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 124, 240, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 124, 240, 0.6); }
+        }
+
+        @keyframes slideInFromLeft {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideInFromRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        /* Mejoras en cards */
+        .card-hover {
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 124, 240, 0.2);
+        }
+
+        /* Gradiente de texto animado */
+        .gradient-text {
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue), var(--accent-purple));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
 
-        /* Estilo para el texto de neón */
-        .text-neon {
-            text-shadow:
-                0 0 5px rgba(0, 172, 238, 0.8),
-                0 0 10px rgba(0, 172, 238, 0.8),
-                0 0 20px rgba(0, 172, 238, 0.8);
+        /* Botones mejorados */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 124, 240, 0.4);
+        }
+
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, var(--secondary-blue), var(--accent-purple));
+        }
+
+        /* Efectos de entrada */
+        .slide-in-left {
+            animation: slideInFromLeft 0.8s ease-out;
+        }
+
+        .slide-in-right {
+            animation: slideInFromRight 0.8s ease-out;
+        }
+
+        /* Mejoras en navegación */
+        .nav-link {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--secondary-blue));
+            transition: left 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            left: 0;
+        }
+
+        /* Anuncio destacado */
+        .ad-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ad-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 124, 240, 0.1), transparent);
+            animation: spin 4s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive mejoras */
+        @media (max-width: 768px) {
+            .text-neon {
+                text-shadow: 0 0 10px rgba(0, 124, 240, 0.6);
+            }
         }
     </style>
 </head>
-<body class="background-animate">
-
+<body>
     <!-- Contenedor Principal -->
-    <div class="container mx-auto p-4 md:p-8 relative z-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        <!-- Header y Navegación -->
-        <header class="flex justify-between items-center py-4 mb-16">
-            <a href="#" class="flex items-center gap-4">
-                <img src="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png" alt="Logo SNEYDER ESTUDIO" class="h-12 md:h-16 w-auto" onerror="this.style.display='none'">
-                <h1 class="hidden sm:block text-2xl md:text-3xl font-bold tracking-wider text-white">SNEYDER<span class="text-blue-400">ESTUDIO</span></h1>
+        <!-- Header y Navegación Mejorado -->
+        <header class="flex justify-between items-center py-6 mb-16">
+            <a href="#" class="flex items-center gap-4 group">
+                <img src="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png" 
+                     alt="Logo SNEYDER ESTUDIO" 
+                     class="h-12 md:h-16 w-auto transition-transform duration-300 group-hover:scale-110 float-animation" 
+                     onerror="this.style.display='none'">
+                <h1 class="hidden sm:block text-2xl md:text-3xl font-bold tracking-wider text-white font-orbitron">
+                    SNEYDER<span class="gradient-text">ESTUDIO</span>
+                </h1>
             </a>
-            <nav class="hidden lg:flex flex-wrap items-center justify-end space-x-4 text-lg">
-                <a href="#servicios" class="hover:text-blue-400 transition duration-300">Servicios</a>
-                <a href="#portafolio" class="hover:text-blue-400 transition duration-300">Portafolio</a>
-                <a href="#herramientas" class="hover:text-blue-400 transition duration-300">Herramientas</a>
-                <a href="#patrocinadores" class="hover:text-blue-400 transition duration-300">Patrocinadores</a>
-                <a href="#usdt-clan" class="hover:text-blue-400 transition duration-300">USDT-CLAN</a>
-                <a href="#musica" class="hover:text-blue-400 transition duration-300">Música</a>
-                <a href="#contacto" class="hover:text-blue-400 transition duration-300">Contacto</a>
+            
+            <nav class="hidden lg:flex items-center space-x-6 text-lg">
+                <a href="#servicios" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Servicios</a>
+                <a href="#portafolio" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Portafolio</a>
+                <a href="#herramientas" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Herramientas</a>
+                <a href="#patrocinadores" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Patrocinadores</a>
+                <a href="#usdt-clan" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">USDT-CLAN</a>
+                <a href="#musica" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Música</a>
+                <a href="#contacto" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Contacto</a>
             </nav>
-            <button id="mobile-menu-button" class="lg:hidden p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            
+            <button id="mobile-menu-button" class="lg:hidden p-2 rounded-lg hover:bg-blue-500/20 transition-colors">
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
             </button>
         </header>
 
-        <!-- Menú Móvil -->
-        <div id="mobile-menu" class="hidden lg:hidden mb-16 bg-gray-900/80 backdrop-blur-sm rounded-3xl p-4">
-            <a href="#servicios" class="block py-2 text-center hover:bg-blue-500/20 rounded-2xl">Servicios</a>
-            <a href="#portafolio" class="block py-2 text-center hover:bg-blue-500/20 rounded-2xl">Portafolio</a>
-            <a href="#herramientas" class="block py-2 text-center hover:bg-blue-500/20 rounded-2xl">Herramientas</a>
-            <a href="#patrocinadores" class="block py-2 text-center hover:bg-blue-500/20 rounded-2xl">Patrocinadores</a>
-            <a href="#usdt-clan" class="block py-2 text-center hover:bg-blue-500/20 rounded-2xl">USDT-CLAN</a>
-            <a href="#musica" class="block py-2 text-center hover:bg-blue-500/20 rounded-2xl">Música</a>
-            <a href="#contacto" class="block py-2 text-center hover:bg-blue-500/20 rounded-2xl">Contacto</a>
+        <!-- Menú Móvil Mejorado -->
+        <div id="mobile-menu" class="hidden lg:hidden mb-16 neon-border rounded-3xl p-6 backdrop-blur-sm">
+            <div class="space-y-2">
+                <a href="#servicios" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Servicios</a>
+                <a href="#portafolio" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Portafolio</a>
+                <a href="#herramientas" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Herramientas</a>
+                <a href="#patrocinadores" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Patrocinadores</a>
+                <a href="#usdt-clan" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">USDT-CLAN</a>
+                <a href="#musica" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Música</a>
+                <a href="#contacto" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Contacto</a>
+            </div>
         </div>
 
-
-        <!-- Sección Hero -->
-        <section id="hero" class="text-center my-24 md:my-32">
-            <h2 class="text-4xl md:text-6xl font-black tracking-tight text-white uppercase">
-                Diseño y Código <br class="hidden md:block"/> para el <span class="text-blue-400 text-neon">Futuro Digital</span>
-            </h2>
-            <p class="mt-6 max-w-2xl mx-auto text-lg md:text-xl text-gray-300">
-                Transformo ideas en realidades visuales y funcionales. Experto en diseño gráfico y desarrollo web, con una visión estratégica en el mundo de las inversiones.
+        <!-- Sección Hero Mejorada -->
+        <section id="hero" class="text-center my-24 md:my-32" data-aos="fade-up">
+            <div class="relative">
+                <h2 class="text-5xl md:text-7xl font-black tracking-tight text-white uppercase font-orbitron mb-6">
+                    Diseño y Código <br class="hidden md:block"/> 
+                    para el <span class="gradient-text text-neon">Futuro Digital</span>
+                </h2>
+                <div class="absolute -inset-4 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-3xl -z-10"></div>
+            </div>
+            
+            <p class="mt-8 max-w-3xl mx-auto text-lg md:text-xl text-gray-300 leading-relaxed">
+                Transformo ideas en realidades visuales y funcionales. Experto en diseño gráfico y desarrollo web, 
+                con una visión estratégica en el mundo de las inversiones y tecnología blockchain.
             </p>
-            <div class="mt-10">
-                <a href="#contacto" class="bg-blue-500 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-600 transition duration-300 transform hover:scale-105 neon-shadow">
-                    Contactame
+            
+            <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#contacto" class="btn-primary text-white font-bold py-4 px-8 rounded-full transition duration-300 transform hover:scale-105">
+                    <i class="fas fa-rocket mr-2"></i>Contactame Ahora
+                </a>
+                <a href="#portafolio" class="border-2 border-blue-500 text-blue-400 font-bold py-4 px-8 rounded-full hover:bg-blue-500 hover:text-white transition duration-300">
+                    <i class="fas fa-eye mr-2"></i>Ver Portafolio
                 </a>
             </div>
         </section>
 
-        <!-- Sección Servicios -->
-        <section id="servicios" class="my-24 scroll-mt-20">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Mis <span class="text-blue-400">Servicios</span></h3>
-            <div class="grid md:grid-cols-2 gap-8">
-                <div class="bg-gray-900/50 backdrop-blur-sm p-8 rounded-3xl neon-border transition duration-500 hover:shadow-blue-500/30 hover:shadow-2xl">
-                    <div class="text-blue-400 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/></svg></div>
-                    <h4 class="text-2xl font-bold mb-2 text-white">Diseño Gráfico</h4>
-                    <p class="text-gray-300">Creación de identidades de marca, logotipos, material publicitario y diseños para redes sociales que capturan la atención y comunican eficazmente.</p>
+        <!-- Sección Servicios Mejorada -->
+        <section id="servicios" class="my-24 scroll-mt-20" data-aos="fade-up">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+                Mis <span class="gradient-text">Servicios</span>
+            </h3>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="neon-border p-8 rounded-3xl backdrop-blur-sm card-hover" data-aos="fade-right">
+                    <div class="text-blue-400 mb-6">
+                        <i class="fas fa-palette text-5xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4 text-white font-orbitron">Diseño Gráfico</h4>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        Creación de identidades de marca impactantes, logotipos únicos, material publicitario innovador 
+                        y diseños para redes sociales que capturan la atención y comunican eficazmente tu mensaje.
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-2">
+                        <span class="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm">Logos</span>
+                        <span class="bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm">Branding</span>
+                        <span class="bg-green-500/20 text-green-300 px-3 py-1 rounded-full text-sm">Social Media</span>
+                    </div>
                 </div>
-                <div class="bg-gray-900/50 backdrop-blur-sm p-8 rounded-3xl neon-border transition duration-500 hover:shadow-blue-500/30 hover:shadow-2xl">
-                    <div class="text-blue-400 mb-4"><svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
-                    <h4 class="text-2xl font-bold mb-2 text-white">Programación Web</h4>
-                    <p class="text-gray-300">Desarrollo de sitios web a medida, desde páginas de aterrizaje hasta aplicaciones web complejas, utilizando las tecnologías más modernas.</p>
+                
+                <div class="neon-border p-8 rounded-3xl backdrop-blur-sm card-hover" data-aos="fade-left">
+                    <div class="text-blue-400 mb-6">
+                        <i class="fas fa-code text-5xl"></i>
+                    </div>
+                    <h4 class="text-2xl font-bold mb-4 text-white font-orbitron">Programación Web</h4>
+                    <p class="text-gray-300 text-lg leading-relaxed">
+                        Desarrollo de sitios web a medida y aplicaciones web complejas, desde páginas de aterrizaje 
+                        hasta sistemas completos, utilizando las tecnologías más modernas y mejores prácticas.
+                    </p>
+                    <div class="mt-6 flex flex-wrap gap-2">
+                        <span class="bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full text-sm">HTML/CSS</span>
+                        <span class="bg-yellow-500/20 text-yellow-300 px-3 py-1 rounded-full text-sm">JavaScript</span>
+                        <span class="bg-red-500/20 text-red-300 px-3 py-1 rounded-full text-sm">React</span>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Sección Portafolio -->
-        <section id="portafolio" class="my-24 scroll-mt-20">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Mi <span class="text-blue-400">Portafolio</span></h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="bg-gray-900/50 rounded-3xl overflow-hidden group"><img src="https://i.postimg.cc/yxH7w4zG/Picsart-25-04-01-13-45-10-794.png" alt="Diseño de Logo Sneyder" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x800/0a0a0a/ffffff?text=Logo+1'"><div class="p-6"><h5 class="text-xl font-bold text-white">Logo Concept</h5><p class="text-gray-400 mt-2">Creación de logo personal.</p></div></div>
-                <div class="bg-gray-900/50 rounded-3xl overflow-hidden group"><img src="https://i.postimg.cc/0Qm8W5hm/Picsart-25-04-01-13-46-26-169.jpg" alt="Diseño de Logo SNEYDER ESTUDIO" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x800/0a0a0a/ffffff?text=Logo+2'"><div class="p-6"><h5 class="text-xl font-bold text-white">Branding SNEYDER ESTUDIO</h5><p class="text-gray-400 mt-2">Identidad visual para la marca.</p></div></div>
-                <div class="bg-gray-900/50 rounded-3xl overflow-hidden group"><img src="https://i.postimg.cc/LsG93gQ2/Picsart-25-04-01-13-47-36-691.jpg" alt="Logo S con fondo de circuito" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x800/0a0a0a/ffffff?text=Logo+3'"><div class="p-6"><h5 class="text-xl font-bold text-white">Icono Tecnológico</h5><p class="text-gray-400 mt-2">Concepto de icono para app.</p></div></div>
-                <div class="bg-gray-900/50 rounded-3xl overflow-hidden group"><img src="https://i.postimg.cc/VNJstWRK/Picsart-25-04-01-13-59-08-989.png" alt="Logo futurista Sneyder" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/600x800/0a0a0a/ffffff?text=Logo+4'"><div class="p-6"><h5 class="text-xl font-bold text-white">Logo Futurista</h5><p class="text-gray-400 mt-2">Diseño de logo con estilo cyber.</p></div></div>
+        <!-- Sección Portafolio Mejorada -->
+        <section id="portafolio" class="my-24 scroll-mt-20" data-aos="fade-up">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+                Mi <span class="gradient-text">Portafolio</span>
+            </h3>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
+                <div class="neon-border rounded-3xl overflow-hidden group card-hover" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="relative overflow-hidden">
+                        <img src="https://i.postimg.cc/yxH7w4zG/Picsart-25-04-01-13-45-10-794.png" 
+                             alt="Diseño de Logo Sneyder" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/400x400/0a0a0a/007cf0?text=Logo+Concept'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h5 class="text-xl font-bold text-white mb-2">Logo Concept</h5>
+                        <p class="text-gray-400">Creación de logo personal con estilo moderno</p>
+                    </div>
+                </div>
+                
+                <div class="neon-border rounded-3xl overflow-hidden group card-hover" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="relative overflow-hidden">
+                        <img src="https://i.postimg.cc/0Qm8W5hm/Picsart-25-04-01-13-46-26-169.jpg" 
+                             alt="Branding SNEYDER ESTUDIO" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/400x400/0a0a0a/007cf0?text=Branding'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h5 class="text-xl font-bold text-white mb-2">Branding Estudio</h5>
+                        <p class="text-gray-400">Identidad visual completa para la marca</p>
+                    </div>
+                </div>
+                
+                <div class="neon-border rounded-3xl overflow-hidden group card-hover" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="relative overflow-hidden">
+                        <img src="https://i.postimg.cc/LsG93gQ2/Picsart-25-04-01-13-47-36-691.jpg" 
+                             alt="Icono Tecnológico" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/400x400/0a0a0a/007cf0?text=Tech+Icon'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h5 class="text-xl font-bold text-white mb-2">Icono Tecnológico</h5>
+                        <p class="text-gray-400">Diseño de icono para aplicación móvil</p>
+                    </div>
+                </div>
+                
+                <div class="neon-border rounded-3xl overflow-hidden group card-hover" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="relative overflow-hidden">
+                        <img src="https://i.postimg.cc/VNJstWRK/Picsart-25-04-01-13-59-08-989.png" 
+                             alt="Logo Futurista" 
+                             class="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
+                             onerror="this.src='https://placehold.co/400x400/0a0a0a/007cf0?text=Futuristic'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    <div class="p-6">
+                        <h5 class="text-xl font-bold text-white mb-2">Logo Futurista</h5>
+                        <p class="text-gray-400">Diseño cyberpunk con efectos avanzados</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Sección Herramientas -->
-        <section id="herramientas" class="my-24 scroll-mt-20">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Mis <span class="text-blue-400">Herramientas</span></h3>
-            <div class="bg-gray-900/50 backdrop-blur-sm p-8 md:p-12 rounded-3xl neon-border max-w-4xl mx-auto text-center">
-                <div class="bg-yellow-400 text-gray-900 font-bold py-3 px-8 rounded-full inline-block text-xl mb-6">
-                    ¡MUY PRONTO!
+        <!-- Sección Herramientas Mejorada -->
+        <section id="herramientas" class="my-24 scroll-mt-20" data-aos="fade-up">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+                Mis <span class="gradient-text">Herramientas</span>
+            </h3>
+            
+            <div class="neon-border p-8 md:p-12 rounded-3xl backdrop-blur-sm max-w-5xl mx-auto text-center">
+                <div class="mb-8">
+                    <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 font-bold py-4 px-8 rounded-full inline-block text-xl mb-6 pulse-glow">
+                        <i class="fas fa-rocket mr-2"></i>¡MUY PRONTO!
+                    </div>
                 </div>
-                <h4 class="text-2xl md:text-3xl font-bold mb-4 text-white">Suite de Herramientas para Criptógrafos</h4>
-                <p class="text-gray-300 max-w-3xl mx-auto text-lg">
-                    Las herramientas son desarrolladas por el equipo de SNEYDER ESTUDIO. Aquí encontrarás a la <b class="text-white">IA Eva</b> para hacer análisis de trading, inversión en minería o futuros, y mucho más herramientas de ayuda para hacer más ágil tus ganancias.
+                
+                <h4 class="text-3xl md:text-4xl font-bold mb-6 text-white font-orbitron">
+                    Suite de Herramientas para <span class="gradient-text">Criptógrafos</span>
+                </h4>
+                
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <div class="text-left">
+                        <h5 class="text-xl font-bold text-blue-400 mb-3">
+                            <i class="fas fa-robot mr-2"></i>IA Eva - Asistente Cripto
+                        </h5>
+                        <p class="text-gray-300">
+                            Inteligencia artificial especializada en análisis de trading, evaluación de inversiones 
+                            en minería y predicciones de mercado.
+                        </p>
+                    </div>
+                    
+                    <div class="text-left">
+                        <h5 class="text-xl font-bold text-purple-400 mb-3">
+                            <i class="fas fa-chart-line mr-2"></i>Herramientas de Análisis
+                        </h5>
+                        <p class="text-gray-300">
+                            Calculadoras de rentabilidad, analizadores de mercado y herramientas automatizadas 
+                            para optimizar tus inversiones.
+                        </p>
+                    </div>
+                </div>
+                
+                <p class="text-gray-300 max-w-3xl mx-auto text-lg mb-6">
+                    Desarrollado por el equipo de <span class="text-white font-semibold">SNEYDER ESTUDIO</span>, 
+                    estas herramientas están diseñadas para hacer más ágiles y rentables tus operaciones en el mundo crypto.
                 </p>
-                <p class="mt-4 text-blue-300 font-semibold">Actualmente en construcción...</p>
+                
+                <div class="flex justify-center items-center gap-2 text-blue-300 font-semibold">
+                    <i class="fas fa-cog fa-spin"></i>
+                    <span>Actualmente en desarrollo...</span>
+                </div>
             </div>
         </section>
         
-        <!-- Sección Patrocinadores -->
-        <section id="patrocinadores" class="my-24 scroll-mt-20">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Nuestros <span class="text-blue-400">Patrocinadores</span></h3>
-            <div class="space-y-8 max-w-4xl mx-auto">
+        <!-- Sección Patrocinadores Mejorada -->
+        <section id="patrocinadores" class="my-24 scroll-mt-20" data-aos="fade-up">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+                Nuestros <span class="gradient-text">Patrocinadores</span>
+            </h3>
+            
+            <div class="space-y-8 max-w-5xl mx-auto">
+                <!-- Anuncio Bitcoin Mining ATM - Destacado -->
+                <div class="neon-border p-8 rounded-3xl backdrop-blur-sm text-center ad-container relative" data-aos="zoom-in">
+                    <div class="relative z-10">
+                        <h4 class="text-2xl font-bold text-white mb-4 font-orbitron">
+                            <i class="fab fa-bitcoin text-yellow-400 mr-2"></i>Bitcoin Mining ATM
+                        </h4>
+                        <p class="text-gray-300 mb-6">Plataforma líder en minería de Bitcoin con tecnología avanzada</p>
+                        <a href="https://bitcoinminingatm.com/?ref=Sneyder" target="_blank" rel="noopener noreferrer" class="inline-block">
+                            <img src="https://bitcoinminingatm.com/styles/images/468x60.gif" 
+                                 alt="Bitcoin Mining ATM" 
+                                 width="468" 
+                                 height="60" 
+                                 class="rounded-lg hover:scale-105 transition-transform duration-300 neon-shadow"
+                                 onerror="this.style.display='none'">
+                        </a>
+                    </div>
+                </div>
+                
                 <!-- Anuncio CoinPayU -->
-                <div class="bg-gray-900/50 backdrop-blur-sm p-6 rounded-3xl neon-border text-center">
-                     <a href="https://www.coinpayu.com/?r=Sneyder2" target="_blank" rel="noopener noreferrer"><img title="Join coinpayu to earn!" alt="coinpayu" src="https://www.coinpayu.com/static/advertiser_banner/468X60.gif" onerror="this.style.display='none'"></a>
+                <div class="neon-border p-6 rounded-3xl backdrop-blur-sm text-center" data-aos="fade-right">
+                    <h4 class="text-xl font-bold text-white mb-4">
+                        <i class="fas fa-coins text-yellow-400 mr-2"></i>CoinPayU
+                    </h4>
+                    <a href="https://www.coinpayu.com/?r=Sneyder2" target="_blank" rel="noopener noreferrer">
+                        <img title="Join coinpayu to earn!" 
+                             alt="coinpayu" 
+                             src="https://www.coinpayu.com/static/advertiser_banner/468X60.gif" 
+                             class="rounded-lg hover:scale-105 transition-transform duration-300 mx-auto"
+                             onerror="this.style.display='none'">
+                    </a>
                 </div>
+                
                 <!-- Otros Anuncios -->
-                <div class="grid md:grid-cols-3 gap-6 text-center">
-                     <a href="https://cylindrical-wave.com/dUm.FVz/ddG/NvvQZBGVUb/geHmX9VujZfUtl/kyPQTJYO0/NqzaQv1-N/zXAMtaNnjtQo3xNqDdUu3/MSQD" target="_blank" rel="noopener noreferrer" class="block bg-gray-800/70 p-4 rounded-3xl hover:bg-blue-500/20 transition duration-300">
-                        <p class="font-semibold text-white">Publicidad 1</p>
-                        <p class="text-sm text-gray-400">Ver Oferta</p>
-                     </a>
-                     <a href="https://cylindrical-wave.com/dsmRF.zKdCGpNFvzZpGIUn/germF9muUZVU/l/k/PfTLYW0CNpzaQP1-NszPArtwN/jVQO3gNaDGUU3QMWS/Z/sbaCW/1np/dBDA0/xq" target="_blank" rel="noopener noreferrer" class="block bg-gray-800/70 p-4 rounded-3xl hover:bg-blue-500/20 transition duration-300">
-                         <p class="font-semibold text-white">Publicidad 2</p>
-                        <p class="text-sm text-gray-400">Ver Oferta</p>
-                     </a>
-                     <a href="https://cylindrical-wave.com/dUm.FVz/ddG/NvvQZBGVUb/geHmX9VujZfUtl/kyPQTJYO0/NqzaQv1-N/zXAMtaNnjtQo3xNqDdUu3/MSQD" target="_blank" rel="noopener noreferrer" class="block bg-gray-800/70 p-4 rounded-3xl hover:bg-blue-500/20 transition duration-300">
-                         <p class="font-semibold text-white">Publicidad 3</p>
-                        <p class="text-sm text-gray-400">Ver Oferta</p>
-                     </a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Sección USDT-CLAN -->
-        <section id="usdt-clan" class="my-24 scroll-mt-20">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Mi Proyecto Cripto: <span class="text-blue-400">USDT-CLAN</span></h3>
-            <div class="bg-gray-900/50 backdrop-blur-sm p-8 md:p-12 rounded-3xl neon-border max-w-5xl mx-auto text-center">
-                <h4 class="text-2xl md:text-3xl font-bold mb-4 text-white">Un Universo Cripto para Latinoamérica</h4>
-                <p class="text-gray-300 max-w-3xl mx-auto text-lg">
-                    USDT-CLAN es una enciclopedia de criptomonedas con información detallada, historia y guías de aprendizaje. Ofrecemos herramientas para convertir cripto a fiat, con un enfoque especial en Nicaragua y Costa Rica.
-                </p>
-                <div class="mt-6 border-y border-blue-500/20 py-6 max-w-3xl mx-auto">
-                    <p class="text-gray-300 text-lg">
-                        Además, puedes obtener cripto gratis a través de <b class="text-white">Faucets y Juegos</b>, participar en nuestro apartado de <b class="text-white">inversión</b>, y probar suerte en la <b class="text-white">lotería mensual</b> que organizo.
-                    </p>
-                </div>
-                <p class="mt-6 text-xl text-white font-semibold">😱 ¡Hay mucho más que poseo y recomiendo, echen un vistazo! 😱</p>
-                <div class="mt-8">
-                     <a href="https://usdt-clan.github.io/" target="_blank" class="bg-blue-500 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-600 transition duration-300 transform hover:scale-105 neon-shadow inline-block">
-                        Visitar USDT-CLAN
+                <div class="grid md:grid-cols-3 gap-6">
+                    <a href="https://cylindrical-wave.com/dUm.FVz/ddG/NvvQZBGVUb/geHmX9VujZfUtl/kyPQTJYO0/NqzaQv1-N/zXAMtaNnjtQo3xNqDdUu3/MSQD" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="block neon-border p-6 rounded-3xl hover:bg-blue-500/20 transition duration-300 text-center card-hover"
+                       data-aos="fade-up" data-aos-delay="100">
+                        <div class="text-blue-400 mb-3">
+                            <i class="fas fa-ad text-3xl"></i>
+                        </div>
+                        <p class="font-semibold text-white">Oferta Especial</p>
+                        <p class="text-sm text-gray-400">Descubre oportunidades exclusivas</p>
+                    </a>
+                    
+                    <a href="https://cylindrical-wave.com/dsmRF.zKdCGpNFvzZpGIUn/germF9muUZVU/l/k/PfTLYW0CNpzaQP1-NszPArtwN/jVQO3gNaDGUU3QMWS/Z/sbaCW/1np/dBDA0/xq" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="block neon-border p-6 rounded-3xl hover:bg-purple-500/20 transition duration-300 text-center card-hover"
+                       data-aos="fade-up" data-aos-delay="200">
+                        <div class="text-purple-400 mb-3">
+                            <i class="fas fa-gift text-3xl"></i>
+                        </div>
+                        <p class="font-semibold text-white">Promoción Limitada</p>
+                        <p class="text-sm text-gray-400">Aprovecha esta oportunidad única</p>
+                    </a>
+                    
+                    <a href="https://cylindrical-wave.com/dUm.FVz/ddG/NvvQZBGVUb/geHmX9VujZfUtl/kyPQTJYO0/NqzaQv1-N/zXAMtaNnjtQo3xNqDdUu3/MSQD" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="block neon-border p-6 rounded-3xl hover:bg-green-500/20 transition duration-300 text-center card-hover"
+                       data-aos="fade-up" data-aos-delay="300">
+                        <div class="text-green-400 mb-3">
+                            <i class="fas fa-star text-3xl"></i>
+                        </div>
+                        <p class="font-semibold text-white">Oferta Premium</p>
+                        <p class="text-sm text-gray-400">Accede a beneficios exclusivos</p>
                     </a>
                 </div>
             </div>
         </section>
 
-        <!-- Sección Música -->
-        <section id="musica" class="my-24 scroll-mt-20">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Proyecto <span class="text-blue-400">Musical</span></h3>
-            <div class="bg-gray-900/50 backdrop-blur-sm p-8 rounded-3xl neon-border max-w-5xl mx-auto">
-                <div class="flex flex-col md:flex-row gap-8 items-center">
-                    <div class="flex-shrink-0 grid grid-cols-2 gap-4 md:w-1/2">
-                        <img src="https://i.postimg.cc/7LJDhYHc/Picsart-25-03-18-04-25-54-861.png" alt="Cover de música 1" class="rounded-3xl w-full h-auto object-cover aspect-square transition duration-300 hover:scale-105" onerror="this.src='https://placehold.co/400x400/0a0a0a/ffffff?text=Cover+1'">
-                        <img src="https://i.postimg.cc/6p3BsfDB/Picsart-25-03-20-05-18-45-773.png" alt="Cover de música 2" class="rounded-3xl w-full h-auto object-cover aspect-square transition duration-300 hover:scale-105" onerror="this.src='https://placehold.co/400x400/0a0a0a/ffffff?text=Cover+2'">
+        <!-- Sección USDT-CLAN Mejorada -->
+        <section id="usdt-clan" class="my-24 scroll-mt-20" data-aos="fade-up">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+                Mi Proyecto Cripto: <span class="gradient-text">USDT-CLAN</span>
+            </h3>
+            
+            <div class="neon-border p-8 md:p-12 rounded-3xl backdrop-blur-sm max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                    <div class="space-y-6">
+                        <h4 class="text-3xl font-bold text-white font-orbitron">
+                            Un Universo Cripto para <span class="gradient-text">Latinoamérica</span>
+                        </h4>
+                        
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            USDT-CLAN es más que una enciclopedia de criptomonedas. Es un ecosistema completo 
+                            con información detallada, historia, guías de aprendizaje y herramientas prácticas.
+                        </p>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-coins text-yellow-400 text-xl mt-1"></i>
+                                <div>
+                                    <h5 class="font-bold text-white">Faucets y Juegos</h5>
+                                    <p class="text-gray-400">Obtén cripto gratis de forma divertida</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-chart-line text-green-400 text-xl mt-1"></i>
+                                <div>
+                                    <h5 class="font-bold text-white">Sección de Inversión</h5>
+                                    <p class="text-gray-400">Estrategias y análisis de mercado</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-ticket-alt text-purple-400 text-xl mt-1"></i>
+                                <div>
+                                    <h5 class="font-bold text-white">Lotería Mensual</h5>
+                                    <p class="text-gray-400">Participa y gana premios en cripto</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-center md:text-left">
-                        <h4 class="text-2xl font-bold text-white">Rap Chopper por Sneyder ft. IA Eva</h4>
-                        <p class="text-gray-300 mt-4">Explora mi faceta musical con temas de rap chopper, escritos por mí y cantados por la voz de la inteligencia artificial Eva. Un proyecto que fusiona la creatividad humana con la tecnología.</p>
-                        <div class="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                            <a href="https://youtube.com/@sneyder-estudio?si=K1Jbf3u-VB0Y560Z" target="_blank" class="bg-red-600 text-white font-bold py-3 px-6 rounded-full hover:bg-red-700 transition duration-300 transform hover:scale-105 flex items-center justify-center gap-2 neon-shadow"><i class="fab fa-youtube"></i>Suscríbete</a>
-                            <a href="https://youtube.com/@sneyder-estudio?si=K1Jbf3u-VB0Y560Z" target="_blank" class="bg-gray-700 text-white font-bold py-3 px-6 rounded-full hover:bg-gray-600 transition duration-300 transform hover:scale-105 flex items-center justify-center gap-2"><i class="fas fa-thumbs-up"></i>Dale Like</a>
+                    
+                    <div class="text-center">
+                        <div class="bg-gradient-to-br from-yellow-400/20 to-orange-500/20 p-8 rounded-3xl mb-6">
+                            <h5 class="text-2xl font-bold text-white mb-4">🎯 Enfoque Regional</h5>
+                            <p class="text-gray-300">
+                                Herramientas especializadas para convertir cripto a fiat en 
+                                <span class="text-blue-400 font-semibold">Nicaragua</span> y 
+                                <span class="text-green-400 font-semibold">Costa Rica</span>
+                            </p>
+                        </div>
+                        
+                        <p class="text-xl text-white font-semibold mb-6">
+                            😱 ¡Descubre todo lo que tengo preparado! 😱
+                        </p>
+                        
+                        <a href="https://usdt-clan.github.io/" 
+                           target="_blank" 
+                           class="btn-primary text-white font-bold py-4 px-8 rounded-full transition duration-300 transform hover:scale-105 inline-flex items-center gap-2">
+                            <i class="fas fa-external-link-alt"></i>
+                            Visitar USDT-CLAN
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección Música Mejorada -->
+        <section id="musica" class="my-24 scroll-mt-20" data-aos="fade-up">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+                Proyecto <span class="gradient-text">Musical</span>
+            </h3>
+            
+            <div class="neon-border p-8 rounded-3xl backdrop-blur-sm max-w-6xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-8 items-center">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="relative group">
+                            <img src="https://i.postimg.cc/7LJDhYHc/Picsart-25-03-18-04-25-54-861.png" 
+                                 alt="Cover de música 1" 
+                                 class="rounded-3xl w-full h-auto object-cover aspect-square transition duration-300 group-hover:scale-105 card-hover"
+                                 onerror="this.src='https://placehold.co/400x400/0a0a0a/007cf0?text=Cover+1'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                            <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <i class="fas fa-play text-2xl"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="relative group">
+                            <img src="https://i.postimg.cc/6p3BsfDB/Picsart-25-03-20-05-18-45-773.png" 
+                                 alt="Cover de música 2" 
+                                 class="rounded-3xl w-full h-auto object-cover aspect-square transition duration-300 group-hover:scale-105 card-hover"
+                                 onerror="this.src='https://placehold.co/400x400/0a0a0a/007cf0?text=Cover+2'">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl"></div>
+                            <div class="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <i class="fas fa-play text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center lg:text-left">
+                        <h4 class="text-3xl font-bold text-white mb-4 font-orbitron">
+                            Rap Chopper por <span class="gradient-text">Sneyder</span>
+                        </h4>
+                        <h5 class="text-xl text-blue-400 mb-4">ft. IA Eva</h5>
+                        
+                        <p class="text-gray-300 mb-6 text-lg leading-relaxed">
+                            Explora mi faceta musical con temas de rap chopper únicos, escritos por mí y 
+                            interpretados por la inteligencia artificial Eva. Una fusión perfecta entre 
+                            creatividad humana y tecnología avanzada.
+                        </p>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex items-center gap-3 justify-center lg:justify-start">
+                                <i class="fas fa-microphone text-red-400"></i>
+                                <span class="text-gray-300">Letras originales por Sneyder</span>
+                            </div>
+                            <div class="flex items-center gap-3 justify-center lg:justify-start">
+                                <i class="fas fa-robot text-blue-400"></i>
+                                <span class="text-gray-300">Voz interpretada por IA Eva</span>
+                            </div>
+                            <div class="flex items-center gap-3 justify-center lg:justify-start">
+                                <i class="fas fa-music text-purple-400"></i>
+                                <span class="text-gray-300">Estilo Rap Chopper</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                            <a href="https://youtube.com/@sneyder-estudio?si=K1Jbf3u-VB0Y560Z" 
+                               target="_blank" 
+                               class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-6 rounded-full transition duration-300 transform hover:scale-105 flex items-center justify-center gap-2 neon-shadow">
+                                <i class="fab fa-youtube"></i>
+                                Suscríbete al Canal
+                            </a>
+                            <a href="https://youtube.com/@sneyder-estudio?si=K1Jbf3u-VB0Y560Z" 
+                               target="_blank" 
+                               class="border-2 border-gray-400 text-gray-300 hover:bg-gray-600 hover:text-white font-bold py-4 px-6 rounded-full transition duration-300 transform hover:scale-105 flex items-center justify-center gap-2">
+                                <i class="fas fa-thumbs-up"></i>
+                                Dale Like
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Sección Contacto -->
-        <section id="contacto" class="my-24 scroll-mt-20 text-center">
-            <h3 class="text-3xl md:text-4xl font-bold text-center mb-12 text-white">Ponte en <span class="text-blue-400">Contacto</span></h3>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-8">
-                <a href="https://wa.me/50672712037" target="_blank" class="bg-green-500 text-white font-bold py-3 px-8 rounded-full hover:bg-green-600 transition duration-300 transform hover:scale-105 flex items-center justify-center gap-3 text-lg">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
-                </a>
-                <a href="mailto:sneyder23081994@gmail.com" class="bg-gray-700 text-white font-bold py-3 px-8 rounded-full hover:bg-gray-600 transition duration-300 transform hover:scale-105 flex items-center justify-center gap-3 text-lg">
-                    <i class="fas fa-envelope"></i>
-                    <span>Email</span>
-                </a>
+        <!-- Sección Contacto Mejorada -->
+        <section id="contacto" class="my-24 scroll-mt-20" data-aos="fade-up">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+                Ponte en <span class="gradient-text">Contacto</span>
+            </h3>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="neon-border p-8 md:p-12 rounded-3xl backdrop-blur-sm text-center">
+                    <h4 class="text-2xl font-bold text-white mb-6">¿Listo para llevar tu proyecto al siguiente nivel?</h4>
+                    <p class="text-gray-300 mb-8 text-lg">
+                        Hablemos sobre tu próximo proyecto. Estoy aquí para ayudarte a crear algo increíble.
+                    </p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+                        <a href="https://wa.me/50672712037" 
+                           target="_blank" 
+                           class="bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-8 rounded-full transition duration-300 transform hover:scale-105 flex items-center justify-center gap-3 text-lg neon-shadow">
+                            <i class="fab fa-whatsapp text-2xl"></i>
+                            <div class="text-left">
+                                <div class="font-bold">WhatsApp</div>
+                                <div class="text-sm opacity-90">Respuesta rápida</div>
+                            </div>
+                        </a>
+                        
+                        <a href="mailto:sneyder23081994@gmail.com" 
+                           class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-full transition duration-300 transform hover:scale-105 flex items-center justify-center gap-3 text-lg neon-shadow">
+                            <i class="fas fa-envelope text-2xl"></i>
+                            <div class="text-left">
+                                <div class="font-bold">Email</div>
+                                <div class="text-sm opacity-90">Formal y detallado</div>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-8 pt-8 border-t border-gray-700">
+                        <p class="text-gray-400 mb-4">También puedes encontrarme en:</p>
+                        <div class="flex justify-center gap-4">
+                            <a href="https://usdt-clan.github.io/" target="_blank" class="text-blue-400 hover:text-blue-300 transition-colors">
+                                <i class="fas fa-globe text-2xl"></i>
+                            </a>
+                            <a href="https://youtube.com/@sneyder-estudio?si=K1Jbf3u-VB0Y560Z" target="_blank" class="text-red-400 hover:text-red-300 transition-colors">
+                                <i class="fab fa-youtube text-2xl"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-
-        <!-- Footer -->
-        <footer class="text-center py-8 border-t border-blue-500/20">
-            <div class="flex justify-center items-center mb-4">
-                <img src="https://i.postimg.cc/mDgqGyw3/Picsart-25-03-28-04-00-43-410.png" alt="Logo secundario SNEYDER ESTUDIO" class="h-10 w-auto" onerror="this.style.display='none'">
+        <!-- Footer Mejorado -->
+        <footer class="text-center py-12 border-t border-blue-500/20 mt-24">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex justify-center items-center mb-6">
+                    <img src="https://i.postimg.cc/mDgqGyw3/Picsart-25-03-28-04-00-43-410.png" 
+                         alt="Logo secundario SNEYDER ESTUDIO" 
+                         class="h-12 w-auto opacity-80 hover:opacity-100 transition-opacity float-animation" 
+                         onerror="this.style.display='none'">
+                </div>
+                
+                <div class="space-y-4">
+                    <p class="text-gray-400 text-lg">
+                        &copy; 2024 <span class="text-white font-semibold">SNEYDER ESTUDIO</span>. 
+                        Todos los derechos reservados.
+                    </p>
+                    <p class="text-gray-500">
+                        Diseñado y desarrollado con <span class="text-red-400">♥</span> y mucha <span class="text-blue-400">pasión</span>.
+                    </p>
+                    <div class="flex justify-center gap-6 mt-6">
+                        <span class="text-gray-500 text-sm flex items-center gap-1">
+                            <i class="fas fa-rocket"></i>
+                            Innovación
+                        </span>
+                        <span class="text-gray-500 text-sm flex items-center gap-1">
+                            <i class="fas fa-heart"></i>
+                            Calidad
+                        </span>
+                        <span class="text-gray-500 text-sm flex items-center gap-1">
+                            <i class="fas fa-star"></i>
+                            Excelencia
+                        </span>
+                    </div>
+                </div>
             </div>
-            <p class="text-gray-400">&copy; 2024 SNEYDER ESTUDIO. Todos los derechos reservados.</p>
-            <p class="text-gray-500 mt-2">Diseñado y desarrollado con pasión.</p>
         </footer>
-
     </div>
 
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
-        // Script para el menú móvil
+        // Inicializar AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Menú móvil mejorado
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
 
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
+            
+            // Animar el icono del menú
+            const icon = mobileMenuButton.querySelector('svg');
+            if (mobileMenu.classList.contains('hidden')) {
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                icon.style.transform = 'rotate(180deg)';
+            }
         });
 
-        // Cierra el menú al hacer clic en un enlace
-        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+        // Cerrar menú móvil al hacer clic en enlaces
         mobileMenuLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
+                mobileMenuButton.querySelector('svg').style.transform = 'rotate(0deg)';
             });
         });
-    </script>
 
+        // Smooth scroll mejorado
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Efecto parallax en el hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const hero = document.getElementById('hero');
+            if (hero) {
+                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Animación de escritura para el título
+        function typeWriter(element, text, speed = 100) {
+            element.innerHTML = '';
+            let i = 0;
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Contador de visitantes (simulado)
+        function updateVisitorCounter() {
+            const counter = Math.floor(Math.random() * 1000) + 5000;
+            const visitorElement = document.getElementById('visitor-counter');
+            if (visitorElement) {
+                visitorElement.textContent = counter.toLocaleString();
+            }
+        }
+
+        // Efecto de cursor personalizado
+        document.addEventListener('mousemove', (e) => {
+            const cursor = document.querySelector('.custom-cursor');
+            if (cursor) {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            }
+        });
+
+        // Lazy loading para imágenes
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+
+        // Inicializar funciones
+        document.addEventListener('DOMContentLoaded', () => {
+            updateVisitorCounter();
+            
+            // Animar contadores
+            const counters = document.querySelectorAll('.counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.dataset.target);
+                const increment = target / 100;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current);
+                        setTimeout(updateCounter, 20);
+                    } else {
+                        counter.textContent = target;
+                    }
+                };
+                
+                updateCounter();
+            });
+        });
+
+        // Preloader (opcional)
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }
+        });
+    </script>
 </body>
 </html>
-
