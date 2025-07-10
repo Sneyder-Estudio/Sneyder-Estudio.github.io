@@ -283,8 +283,8 @@
     <!-- Contenedor Principal -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        <!-- Header y Navegación Mejorado -->
-        <header class="flex justify-between items-center py-6 mb-16">
+        <!-- Header Simplificado -->
+        <header class="flex justify-start items-center py-6 mb-16">
             <a href="#" class="flex items-center gap-4 group">
                 <img src="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png" 
                      alt="Logo SNEYDER ESTUDIO" 
@@ -294,36 +294,7 @@
                     SNEYDER<span class="gradient-text">ESTUDIO</span>
                 </h1>
             </a>
-            
-            <nav class="hidden lg:flex items-center space-x-6 text-lg">
-                <a href="#servicios" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Servicios</a>
-                <a href="#portafolio" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Portafolio</a>
-                <a href="#herramientas" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Herramientas</a>
-                <a href="#patrocinadores" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Patrocinadores</a>
-                <a href="#usdt-clan" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">USDT-CLAN</a>
-                <a href="#musica" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Música</a>
-                <a href="#contacto" class="nav-link hover:text-blue-400 transition duration-300 px-2 py-1">Contacto</a>
-            </nav>
-            
-            <button id="mobile-menu-button" class="lg:hidden p-2 rounded-lg hover:bg-blue-500/20 transition-colors">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                </svg>
-            </button>
         </header>
-
-        <!-- Menú Móvil Mejorado -->
-        <div id="mobile-menu" class="hidden lg:hidden mb-16 neon-border rounded-3xl p-6 backdrop-blur-sm">
-            <div class="space-y-2">
-                <a href="#servicios" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Servicios</a>
-                <a href="#portafolio" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Portafolio</a>
-                <a href="#herramientas" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Herramientas</a>
-                <a href="#patrocinadores" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Patrocinadores</a>
-                <a href="#usdt-clan" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">USDT-CLAN</a>
-                <a href="#musica" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Música</a>
-                <a href="#contacto" class="block py-3 text-center hover:bg-blue-500/20 rounded-xl transition-colors">Contacto</a>
-            </div>
-        </div>
 
         <!-- Sección Hero Mejorada -->
         <section id="hero" class="text-center my-24 md:my-32" data-aos="fade-up">
@@ -509,10 +480,17 @@
         
         <!-- Sección Patrocinadores Mejorada -->
         <section id="patrocinadores" class="my-24 scroll-mt-20" data-aos="fade-up">
-            <h3 class="text-4xl md:text-5xl font-bold text-center mb-16 text-white font-orbitron">
+            <h3 class="text-4xl md:text-5xl font-bold text-center mb-8 text-white font-orbitron">
                 Nuestros <span class="gradient-text">Patrocinadores</span>
             </h3>
             
+            <!-- Botón Nuevo Agregado -->
+            <div class="text-center mb-16">
+                <a href="minerapp.html" class="btn-primary text-white font-bold py-4 px-8 rounded-full transition duration-300 transform hover:scale-105 inline-block">
+                    <i class="fas fa-download mr-2"></i>Bitcoin Mining ATM. Apk
+                </a>
+            </div>
+
             <div class="space-y-8 max-w-5xl mx-auto">
                 <!-- Anuncio Bitcoin Mining ATM - Destacado -->
                 <div class="neon-border p-8 rounded-3xl backdrop-blur-sm text-center ad-container relative" data-aos="zoom-in">
@@ -831,31 +809,6 @@
             offset: 100
         });
 
-        // Menú móvil mejorado
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
-
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            
-            // Animar el icono del menú
-            const icon = mobileMenuButton.querySelector('svg');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.style.transform = 'rotate(0deg)';
-            } else {
-                icon.style.transform = 'rotate(180deg)';
-            }
-        });
-
-        // Cerrar menú móvil al hacer clic en enlaces
-        mobileMenuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
-                mobileMenuButton.querySelector('svg').style.transform = 'rotate(0deg)';
-            });
-        });
-
         // Smooth scroll mejorado
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
@@ -964,3 +917,4 @@
     </script>
 </body>
 </html>
+
