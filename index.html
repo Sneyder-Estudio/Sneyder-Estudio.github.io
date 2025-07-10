@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNEYDER ESTUDIO - Diseño, Programación e Inversiones</title>
     
+    <!-- PWA Theme Color -->
+    <meta name="theme-color" content="#007cf0">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png">
+
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
@@ -271,10 +277,81 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Estilos para el Toast de Instalación */
+        #install-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--accent-purple));
+            color: white;
+            padding: 16px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            visibility: hidden;
+        }
+
+        #install-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        /* Estilos para el botón de compartir */
+        #share-button {
+            background-color: rgba(17, 24, 39, 0.6);
+            border: 2px solid var(--primary-blue);
+            color: var(--primary-blue);
+            width: 48px;
+            height: 48px;
+            transition: all 0.3s ease;
+        }
+
+        #share-button:hover {
+            background-color: var(--primary-blue);
+            color: white;
+            box-shadow: 0 0 20px rgba(0, 124, 240, 0.5);
+            transform: scale(1.1);
+        }
+
+        /* Estilos para el tooltip de copiado */
+        #copy-tooltip {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background-color: #2dd4bf;
+            color: black;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: bold;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(-10px);
+        }
+        
+        #copy-tooltip.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
         /* Responsive mejoras */
         @media (max-width: 768px) {
             .text-neon {
                 text-shadow: 0 0 10px rgba(0, 124, 240, 0.6);
+            }
+            #install-toast {
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
             }
         }
     </style>
@@ -283,8 +360,9 @@
     <!-- Contenedor Principal -->
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
-        <!-- Header Simplificado -->
-        <header class="flex justify-start items-center py-6 mb-16">
+        <!-- Header con botón de compartir -->
+        <header class="flex justify-between items-center py-6 mb-16">
+            <!-- Logo -->
             <a href="#" class="flex items-center gap-4 group">
                 <img src="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png" 
                      alt="Logo SNEYDER ESTUDIO" 
@@ -294,6 +372,10 @@
                     SNEYDER<span class="gradient-text">ESTUDIO</span>
                 </h1>
             </a>
+            <!-- Botón de Compartir -->
+            <button id="share-button" class="rounded-full flex items-center justify-center" title="Compartir">
+                <i class="fas fa-share-alt text-xl"></i>
+            </button>
         </header>
 
         <!-- Sección Hero Mejorada -->
@@ -799,9 +881,101 @@
         </footer>
     </div>
 
+    <!-- Toast de Instalación -->
+    <div id="install-toast">
+        <img src="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png" alt="Logo" class="h-10 w-10">
+        <div>
+            <p class="font-bold">Instalar SNEYDER ESTUDIO</p>
+            <p class="text-sm opacity-80">Añade la web a tu pantalla de inicio.</p>
+        </div>
+    </div>
+    
+    <!-- Tooltip para 'copiado' -->
+    <div id="copy-tooltip">¡Enlace copiado!</div>
+
+
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
+        // --- PWA (Progressive Web App) SETUP ---
+
+        // 1. Crear y registrar el Manifest dinámicamente
+        const manifest = {
+            "name": "SNEYDER ESTUDIO",
+            "short_name": "Sneyder",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#050816",
+            "theme_color": "#007cf0",
+            "description": "Diseño, Programación e Inversiones por SNEYDER ESTUDIO.",
+            "icons": [
+                {
+                    "src": "https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+        const manifestURL = URL.createObjectURL(manifestBlob);
+        const linkManifest = document.createElement('link');
+        linkManifest.rel = 'manifest';
+        linkManifest.href = manifestURL;
+        document.head.appendChild(linkManifest);
+
+        // 2. Crear y registrar el Service Worker dinámicamente
+        const swCode = `
+            const CACHE_NAME = 'sneyder-estudio-cache-v1';
+            const urlsToCache = [
+                '/',
+                '/index.html'
+            ];
+
+            self.addEventListener('install', event => {
+                event.waitUntil(
+                    caches.open(CACHE_NAME)
+                        .then(cache => {
+                            console.log('Opened cache');
+                            return cache.addAll(urlsToCache);
+                        })
+                );
+            });
+
+            self.addEventListener('fetch', event => {
+                event.respondWith(
+                    caches.match(event.request)
+                        .then(response => {
+                            if (response) {
+                                return response;
+                            }
+                            return fetch(event.request);
+                        })
+                );
+            });
+        `;
+        const swBlob = new Blob([swCode], { type: 'application/javascript' });
+        const swURL = URL.createObjectURL(swBlob);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register(swURL)
+                    .then(registration => {
+                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                    })
+                    .catch(err => {
+                        console.log('ServiceWorker registration failed: ', err);
+                    });
+            });
+        }
+
+        // --- FIN DE PWA SETUP ---
+
+
         // Inicializar AOS
         AOS.init({
             duration: 1000,
@@ -823,86 +997,62 @@
             });
         });
 
-        // Efecto parallax en el hero
+        // Efecto parallax en el hero (reducido para mejor rendimiento)
         window.addEventListener('scroll', () => {
             const scrolled = window.pageYOffset;
             const hero = document.getElementById('hero');
             if (hero) {
-                hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+                hero.style.transform = `translateY(${scrolled * 0.2}px)`;
             }
         });
 
-        // Animación de escritura para el título
-        function typeWriter(element, text, speed = 100) {
-            element.innerHTML = '';
-            let i = 0;
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Contador de visitantes (simulado)
-        function updateVisitorCounter() {
-            const counter = Math.floor(Math.random() * 1000) + 5000;
-            const visitorElement = document.getElementById('visitor-counter');
-            if (visitorElement) {
-                visitorElement.textContent = counter.toLocaleString();
-            }
-        }
-
-        // Efecto de cursor personalizado
-        document.addEventListener('mousemove', (e) => {
-            const cursor = document.querySelector('.custom-cursor');
-            if (cursor) {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            }
-        });
-
-        // Lazy loading para imágenes
-        const images = document.querySelectorAll('img[data-src]');
-        const imageObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.remove('lazy');
-                    observer.unobserve(img);
-                }
-            });
-        });
-
-        images.forEach(img => imageObserver.observe(img));
-
-        // Inicializar funciones
+        // Mostrar y ocultar el Toast de instalación
         document.addEventListener('DOMContentLoaded', () => {
-            updateVisitorCounter();
+            const installToast = document.getElementById('install-toast');
             
-            // Animar contadores
-            const counters = document.querySelectorAll('.counter');
-            counters.forEach(counter => {
-                const target = parseInt(counter.dataset.target);
-                const increment = target / 100;
-                let current = 0;
-                
-                const updateCounter = () => {
-                    if (current < target) {
-                        current += increment;
-                        counter.textContent = Math.floor(current);
-                        setTimeout(updateCounter, 20);
-                    } else {
-                        counter.textContent = target;
-                    }
-                };
-                
-                updateCounter();
-            });
+            // Mostrar el toast después de un breve retraso
+            setTimeout(() => {
+                installToast.classList.add('show');
+            }, 1500);
+
+            // Ocultar el toast después de 30 segundos
+            setTimeout(() => {
+                installToast.classList.remove('show');
+            }, 30000);
         });
+        
+        // Lógica del botón de compartir
+        const shareButton = document.getElementById('share-button');
+        const copyTooltip = document.getElementById('copy-tooltip');
+
+        shareButton.addEventListener('click', async () => {
+            const shareData = {
+                title: 'SNEYDER ESTUDIO',
+                text: 'Descubre el portafolio de SNEYDER ESTUDIO - Diseño, Programación e Inversiones.',
+                url: 'https://sneyder-estudio.github.io/'
+            };
+
+            if (navigator.share) {
+                try {
+                    await navigator.share(shareData);
+                    console.log('Contenido compartido con éxito');
+                } catch (err) {
+                    console.error('Error al compartir:', err);
+                }
+            } else {
+                // Fallback para copiar al portapapeles
+                try {
+                    await navigator.clipboard.writeText(shareData.url);
+                    copyTooltip.classList.add('show');
+                    setTimeout(() => {
+                        copyTooltip.classList.remove('show');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Error al copiar al portapapeles:', err);
+                }
+            }
+        });
+
 
         // Preloader (opcional)
         window.addEventListener('load', () => {
