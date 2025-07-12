@@ -5,11 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SNEYDER ESTUDIO - Diseño, Programación e Inversiones</title>
     
-    <!-- PWA Theme Color -->
+    <!-- PWA Meta Tags -->
     <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
     
     <!-- Apple Touch Icon -->
     <link rel="apple-touch-icon" href="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png">
+    <link rel="icon" href="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -237,7 +241,7 @@
         /* Share button styles */
         .share-btn {
             position: fixed;
-            bottom: 90px; /* Changed from top */
+            bottom: 90px;
             right: 20px;
             z-index: 999;
             background: linear-gradient(135deg, var(--highlight), #fd79a8);
@@ -291,9 +295,184 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        /* PWA Install Modal */
+        .install-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .install-modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .install-modal-content {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .install-modal.show .install-modal-content {
+            transform: scale(1);
+        }
+
+        .install-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .install-btn {
+            background: linear-gradient(135deg, var(--highlight), #fd79a8);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .install-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(233, 69, 96, 0.4);
+        }
+
+        .close-btn {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .close-btn:hover {
+            border-color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .dont-show-again {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .dont-show-again input[type="checkbox"] {
+            accent-color: var(--highlight);
+        }
+
+        /* Install buttons in footer */
+        .install-footer-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .install-footer-btn {
+            background: linear-gradient(135deg, var(--cyan), #74b9ff);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        .install-footer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+        }
+
+        .install-footer-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Hide install elements when installed */
+        .app-installed .install-modal,
+        .app-installed .install-footer-buttons {
+            display: none !important;
+        }
+
+        @media (max-width: 640px) {
+            .install-footer-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .install-modal-content {
+                padding: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- PWA Install Modal -->
+    <div id="install-modal" class="install-modal">
+        <div class="install-modal-content">
+            <div class="mb-4">
+                <img src="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png" 
+                     alt="SNEYDER ESTUDIO" 
+                     class="w-16 h-16 rounded-full mx-auto mb-4 glow-cyan">
+                <h3 class="text-xl font-bold text-white mb-2">Instala SNEYDER ESTUDIO</h3>
+                <p class="text-gray-300 text-sm">
+                    Instala nuestra aplicación en tu dispositivo para que funcione como una aplicación nativa y mantenerte siempre actualizado.
+                </p>
+            </div>
+            
+            <div class="install-buttons">
+                <button id="install-btn" class="install-btn">
+                    <i class="fas fa-download mr-2"></i>
+                    Instalar
+                </button>
+                <button id="close-install-modal" class="close-btn">
+                    Cerrar
+                </button>
+            </div>
+            
+            <div class="dont-show-again">
+                <input type="checkbox" id="dont-show-again" />
+                <label for="dont-show-again">No volver a molestar</label>
+            </div>
+        </div>
+    </div>
+
     <!-- Mobile Navigation -->
     <div id="mobile-nav" class="mobile-nav">
         <div class="flex justify-end p-6">
@@ -817,6 +996,14 @@
         <!-- Footer -->
         <footer class="text-center py-16 border-t border-pink-500/20 mt-20">
             <div class="max-w-4xl mx-auto">
+                <!-- Install App Buttons -->
+                <div id="install-footer-buttons" class="install-footer-buttons">
+                    <button id="install-footer-btn" class="install-footer-btn">
+                        <i class="fab fa-android"></i>
+                        Instalar App
+                    </button>
+                </div>
+                
                 <div class="flex justify-center items-center mb-8">
                     <img src="https://i.postimg.cc/mDgqGyw3/Picsart-25-03-28-04-00-43-410.png" 
                          alt="Logo secundario SNEYDER ESTUDIO" 
@@ -860,6 +1047,220 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
+        // PWA Variables
+        let deferredPrompt;
+        let isAppInstalled = false;
+        
+        // Check if app is already installed
+        function checkIfAppInstalled() {
+            // Check if running in standalone mode
+            if (window.matchMedia('(display-mode: standalone)').matches ||
+                window.navigator.standalone ||
+                document.referrer.includes('android-app://')) {
+                isAppInstalled = true;
+                document.body.classList.add('app-installed');
+                localStorage.setItem('appInstalled', 'true');
+            }
+            
+            // Check localStorage
+            if (localStorage.getItem('appInstalled') === 'true') {
+                isAppInstalled = true;
+                document.body.classList.add('app-installed');
+            }
+        }
+
+        // Create and register service worker
+        function registerServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    const CACHE_NAME = 'sneyder-estudio-v1';
+                    const urlsToCache = [
+                        '/',
+                        '/manifest.json'
+                    ];
+
+                    self.addEventListener('install', event => {
+                        event.waitUntil(
+                            caches.open(CACHE_NAME)
+                                .then(cache => cache.addAll(urlsToCache))
+                        );
+                        self.skipWaiting();
+                    });
+
+                    self.addEventListener('fetch', event => {
+                        event.respondWith(
+                            caches.match(event.request)
+                                .then(response => response || fetch(event.request))
+                        );
+                    });
+
+                    self.addEventListener('activate', event => {
+                        event.waitUntil(
+                            caches.keys().then(cacheNames => {
+                                return Promise.all(
+                                    cacheNames.map(cacheName => {
+                                        if (cacheName !== CACHE_NAME) {
+                                            return caches.delete(cacheName);
+                                        }
+                                    })
+                                );
+                            })
+                        );
+                    });
+                `;
+                
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const swUrl = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(swUrl)
+                    .then(registration => {
+                        console.log('Service Worker registered:', registration);
+                    })
+                    .catch(error => {
+                        console.error('Service Worker registration failed:', error);
+                    });
+            }
+        }
+
+        // Create dynamic manifest
+        function createManifest() {
+            const manifest = {
+                "name": "SNEYDER ESTUDIO",
+                "short_name": "Sneyder",
+                "start_url": "/",
+                "display": "standalone",
+                "background_color": "#1a1a2e",
+                "theme_color": "#e94560",
+                "orientation": "portrait-primary",
+                "description": "Diseño, Programación e Inversiones por SNEYDER ESTUDIO",
+                "lang": "es",
+                "dir": "ltr",
+                "icons": [
+                    {
+                        "src": "https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png",
+                        "sizes": "192x192",
+                        "type": "image/png",
+                        "purpose": "maskable any"
+                    },
+                    {
+                        "src": "https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png",
+                        "sizes": "512x512",
+                        "type": "image/png",
+                        "purpose": "maskable any"
+                    }
+                ],
+                "categories": ["design", "development", "crypto", "music"],
+                "screenshots": [
+                    {
+                        "src": "https://i.postimg.cc/yxH7w4zG/Picsart-25-04-01-13-45-10-794.png",
+                        "sizes": "1280x720",
+                        "type": "image/png",
+                        "platform": "wide"
+                    }
+                ]
+            };
+
+            const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = manifestURL;
+            document.head.appendChild(link);
+        }
+
+        // Show install modal
+        function showInstallModal() {
+            if (isAppInstalled || localStorage.getItem('dontShowInstall') === 'true') {
+                return;
+            }
+            
+            setTimeout(() => {
+                const modal = document.getElementById('install-modal');
+                modal.classList.add('show');
+            }, 3000); // Show after 3 seconds
+        }
+
+        // Hide install modal
+        function hideInstallModal() {
+            const modal = document.getElementById('install-modal');
+            modal.classList.remove('show');
+        }
+
+        // Install PWA
+        async function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                
+                if (outcome === 'accepted') {
+                    console.log('PWA installed successfully');
+                    isAppInstalled = true;
+                    document.body.classList.add('app-installed');
+                    localStorage.setItem('appInstalled', 'true');
+                    hideInstallModal();
+                } else {
+                    console.log('PWA installation dismissed');
+                }
+                deferredPrompt = null;
+            } else {
+                // Fallback for browsers that don't support beforeinstallprompt
+                alert('Para instalar la app:\n\n1. Toca el menú del navegador (⋮)\n2. Selecciona "Instalar app" o "Añadir a pantalla de inicio"\n3. Confirma la instalación');
+            }
+        }
+
+        // Event Listeners
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            console.log('App can be installed');
+        });
+
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA was installed');
+            isAppInstalled = true;
+            document.body.classList.add('app-installed');
+            localStorage.setItem('appInstalled', 'true');
+            hideInstallModal();
+        });
+
+        // Initialize PWA
+        document.addEventListener('DOMContentLoaded', () => {
+            checkIfAppInstalled();
+            createManifest();
+            registerServiceWorker();
+            
+            if (!isAppInstalled) {
+                showInstallModal();
+            }
+
+            // Install modal event listeners
+            const installModal = document.getElementById('install-modal');
+            const installBtn = document.getElementById('install-btn');
+            const closeInstallModal = document.getElementById('close-install-modal');
+            const dontShowAgain = document.getElementById('dont-show-again');
+            const installFooterBtn = document.getElementById('install-footer-btn');
+
+            installBtn.addEventListener('click', installPWA);
+            installFooterBtn.addEventListener('click', installPWA);
+
+            closeInstallModal.addEventListener('click', () => {
+                hideInstallModal();
+                if (dontShowAgain.checked) {
+                    localStorage.setItem('dontShowInstall', 'true');
+                }
+            });
+
+            // Close modal when clicking outside
+            installModal.addEventListener('click', (e) => {
+                if (e.target === installModal) {
+                    hideInstallModal();
+                    if (dontShowAgain.checked) {
+                        localStorage.setItem('dontShowInstall', 'true');
+                    }
+                }
+            });
+        });
+
         // Initialize AOS
         AOS.init({
             duration: 1000,
@@ -970,91 +1371,16 @@
             });
         });
 
-        // PWA Installation
-        let deferredPrompt;
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            deferredPrompt = e;
-            // Show install button or notification
-            showInstallPromotion();
-        });
-
-        function showInstallPromotion() {
-            // You can add a custom install promotion here
-            console.log('App can be installed');
-        }
-
-        // Service Worker Registration
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swCode = `
-                    const CACHE_NAME = 'sneyder-estudio-v1';
-                    const urlsToCache = [
-                        '/',
-                        '/index.html'
-                    ];
-
-                    self.addEventListener('install', event => {
-                        event.waitUntil(
-                            caches.open(CACHE_NAME)
-                                .then(cache => cache.addAll(urlsToCache))
-                        );
-                    });
-
-                    self.addEventListener('fetch', event => {
-                        event.respondWith(
-                            caches.match(event.request)
-                                .then(response => response || fetch(event.request))
-                        );
-                    });
-                `;
-                
-                const blob = new Blob([swCode], { type: 'application/javascript' });
-                const swUrl = URL.createObjectURL(blob);
-                
-                navigator.serviceWorker.register(swUrl)
-                    .then(registration => {
-                        console.log('SW registered:', registration);
-                    })
-                    .catch(error => {
-                        console.log('SW registration failed:', error);
-                    });
-            });
-        }
-
-        // Dynamic manifest
-        const manifest = {
-            "name": "SNEYDER ESTUDIO",
-            "short_name": "Sneyder",
-            "start_url": ".",
-            "display": "standalone",
-            "background_color": "#1a1a2e",
-            "theme_color": "#e94560",
-            "description": "Diseño, Programación e Inversiones por SNEYDER ESTUDIO",
-            "icons": [
-                {
-                    "src": "https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png",
-                    "sizes": "192x192",
-                    "type": "image/png"
-                }
-            ]
-        };
-
-        const manifestBlob = new Blob([JSON.stringify(manifest)], { type: 'application/json' });
-        const manifestURL = URL.createObjectURL(manifestBlob);
-        const link = document.createElement('link');
-        link.rel = 'manifest';
-        link.href = manifestURL;
-        document.head.appendChild(link);
-
         // Performance optimization: Lazy load images
         const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     const img = entry.target;
-                    img.src = img.dataset.src;
-                    img.classList.remove('lazy');
-                    observer.unobserve(img);
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        observer.unobserve(img);
+                    }
                 }
             });
         });
@@ -1062,7 +1388,25 @@
         document.querySelectorAll('img[data-src]').forEach(img => {
             imageObserver.observe(img);
         });
+
+        // Prevent zoom on double tap (iOS)
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function (event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+
+        // Handle orientation change
+        window.addEventListener('orientationchange', () => {
+            // Force reflow to fix potential layout issues
+            setTimeout(() => {
+                window.scrollTo(0, window.scrollY + 1);
+                window.scrollTo(0, window.scrollY - 1);
+            }, 500);
+        });
     </script>
 </body>
 </html>
-
