@@ -16,7 +16,7 @@
     <link rel="icon" href="https://i.postimg.cc/kXw7hpYj/Picsart-25-04-01-13-42-29-671.png">
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +24,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     
     <!-- AOS Animation Library -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
@@ -43,6 +43,14 @@
 
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
         }
 
         body {
@@ -51,10 +59,27 @@
             color: #ffffff;
             min-height: 100vh;
             overflow-x: hidden;
+            width: 100%;
+            max-width: 100%;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .font-space {
             font-family: 'Space Grotesk', sans-serif;
+        }
+
+        /* Prevent horizontal overflow */
+        .container {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* Responsive images */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* Background pattern */
@@ -136,6 +161,12 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -146,6 +177,12 @@
         .btn-secondary {
             background: linear-gradient(135deg, var(--cyan), #74b9ff);
             transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
         }
 
         .btn-secondary:hover {
@@ -215,12 +252,15 @@
             border-radius: 4px;
         }
 
-        /* Mobile optimizations */
+        /* Responsive text sizes */
         @media (max-width: 768px) {
-            .text-7xl { font-size: 3rem; }
-            .text-6xl { font-size: 2.5rem; }
-            .text-5xl { font-size: 2rem; }
-            .text-4xl { font-size: 1.75rem; }
+            .text-7xl { font-size: 2.5rem !important; }
+            .text-6xl { font-size: 2rem !important; }
+            .text-5xl { font-size: 1.75rem !important; }
+            .text-4xl { font-size: 1.5rem !important; }
+            .text-3xl { font-size: 1.25rem !important; }
+            .text-2xl { font-size: 1.125rem !important; }
+            .text-xl { font-size: 1rem !important; }
             
             .glass {
                 backdrop-filter: blur(10px);
@@ -230,12 +270,23 @@
             .card-hover:hover {
                 transform: translateY(-8px) scale(1.01);
             }
+
+            /* Mobile specific overrides */
+            .px-4 { padding-left: 1rem; padding-right: 1rem; }
+            .px-6 { padding-left: 1.5rem; padding-right: 1.5rem; }
+            .px-8 { padding-left: 2rem; padding-right: 2rem; }
         }
 
         @media (max-width: 640px) {
-            .text-7xl { font-size: 2.5rem; }
-            .text-6xl { font-size: 2rem; }
-            .text-5xl { font-size: 1.75rem; }
+            .text-7xl { font-size: 2rem !important; }
+            .text-6xl { font-size: 1.75rem !important; }
+            .text-5xl { font-size: 1.5rem !important; }
+            .text-4xl { font-size: 1.25rem !important; }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
         }
 
         /* Share button styles */
@@ -275,6 +326,7 @@
             transform: translateX(400px);
             transition: transform 0.3s ease;
             z-index: 1000;
+            max-width: calc(100vw - 40px);
         }
 
         .toast.show {
@@ -327,6 +379,7 @@
             padding: 2rem;
             max-width: 400px;
             width: 90%;
+            max-width: calc(100vw - 2rem);
             text-align: center;
             box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
             transform: scale(0.9);
@@ -354,6 +407,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 1rem;
+            width: 100%;
         }
 
         .install-btn:hover {
@@ -370,6 +424,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-size: 0.9rem;
+            width: 100%;
         }
 
         .close-btn:hover {
@@ -430,6 +485,54 @@
             display: none !important;
         }
 
+        /* Responsive grid fixes */
+        .grid {
+            display: grid;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .grid-cols-1 {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        .grid-cols-2 {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        @media (min-width: 640px) {
+            .sm\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .lg\:grid-cols-2 {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .lg\:grid-cols-3 {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .lg\:grid-cols-4 {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        /* Ensure flex elements don't overflow */
+        .flex {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .flex-col {
+            flex-direction: column;
+        }
+
+        .flex-nowrap {
+            flex-wrap: nowrap;
+        }
+
+        /* Additional mobile fixes */
         @media (max-width: 640px) {
             .install-footer-buttons {
                 flex-direction: column;
@@ -438,6 +541,43 @@
             
             .install-modal-content {
                 padding: 1.5rem;
+            }
+
+            .flex-col {
+                flex-direction: column;
+            }
+
+            .sm\:flex-row {
+                flex-direction: column;
+            }
+        }
+
+        /* Prevent text overflow */
+        h1, h2, h3, h4, h5, h6, p, span, div {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+
+        /* Ensure no element extends beyond viewport */
+        .max-w-full {
+            max-width: 100% !important;
+        }
+
+        .w-full {
+            width: 100% !important;
+        }
+
+        /* Fix for service and portfolio cards */
+        .service-card, .portfolio-card {
+            width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .service-card, .portfolio-card {
+                margin-bottom: 1rem;
             }
         }
     </style>
@@ -497,7 +637,7 @@
     </a>
 
     <!-- Main Container -->
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 max-w-full">
 
         <!-- Header -->
         <header class="flex justify-between items-center py-6 relative z-20">
@@ -528,18 +668,18 @@
 
         <!-- Hero Section -->
         <section id="hero" class="text-center py-20 lg:py-32" data-aos="fade-up">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-5xl lg:text-7xl font-black font-space mb-6 leading-tight">
+            <div class="max-w-4xl mx-auto px-4">
+                <h2 class="text-4xl sm:text-5xl lg:text-7xl font-black font-space mb-6 leading-tight">
                     Diseño y Código 
                     <span class="text-gradient-pink block">para el Futuro</span>
                 </h2>
                 
-                <p class="text-lg lg:text-xl text-gray-300 mb-12 leading-relaxed max-w-2xl mx-auto">
+                <p class="text-base sm:text-lg lg:text-xl text-gray-300 mb-12 leading-relaxed max-w-2xl mx-auto">
                     Transformo ideas en realidades visuales y funcionales. Experto en diseño gráfico y desarrollo web, 
                     con una visión estratégica en el mundo de las inversiones.
                 </p>
                 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center px-4">
                     <a href="#contacto" class="btn-primary text-white font-semibold py-4 px-8 rounded-full">
                         <i class="fas fa-rocket mr-2"></i>Contactarme
                     </a>
@@ -552,8 +692,8 @@
 
         <!-- Services Section -->
         <section id="servicios" class="py-20 scroll-mt-20" data-aos="fade-up">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl lg:text-5xl font-bold font-space mb-4">
+            <div class="text-center mb-16 px-4">
+                <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-space mb-4">
                     Mis <span class="text-gradient-cyan">Servicios</span>
                 </h3>
                 <p class="text-gray-400 max-w-2xl mx-auto">
@@ -561,13 +701,13 @@
                 </p>
             </div>
             
-            <div class="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-                <div class="glass p-8 rounded-3xl card-hover glow-pink" data-aos="fade-right">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto px-4">
+                <div class="glass p-6 sm:p-8 rounded-3xl card-hover glow-pink service-card" data-aos="fade-right">
                     <div class="text-pink-400 mb-6">
-                        <i class="fas fa-palette text-6xl"></i>
+                        <i class="fas fa-palette text-4xl sm:text-6xl"></i>
                     </div>
-                    <h4 class="text-2xl font-bold mb-4 font-space">Diseño Gráfico</h4>
-                    <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                    <h4 class="text-xl sm:text-2xl font-bold mb-4 font-space">Diseño Gráfico</h4>
+                    <p class="text-gray-300 text-base sm:text-lg mb-6 leading-relaxed">
                         Creación de identidades de marca impactantes, logotipos únicos y diseños 
                         que comunican eficazmente tu mensaje visual.
                     </p>
@@ -578,12 +718,12 @@
                     </div>
                 </div>
                 
-                <div class="glass p-8 rounded-3xl card-hover glow-cyan" data-aos="fade-left">
+                <div class="glass p-6 sm:p-8 rounded-3xl card-hover glow-cyan service-card" data-aos="fade-left">
                     <div class="text-cyan-400 mb-6">
-                        <i class="fas fa-code text-6xl"></i>
+                        <i class="fas fa-code text-4xl sm:text-6xl"></i>
                     </div>
-                    <h4 class="text-2xl font-bold mb-4 font-space">Programación Web</h4>
-                    <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                    <h4 class="text-xl sm:text-2xl font-bold mb-4 font-space">Programación Web</h4>
+                    <p class="text-gray-300 text-base sm:text-lg mb-6 leading-relaxed">
                         Desarrollo de sitios web modernos y aplicaciones web complejas utilizando 
                         las tecnologías más avanzadas del mercado.
                     </p>
@@ -594,16 +734,21 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Ad Insertion 1 -->
-            <div class="mt-16 text-center" data-aos="fade-up">
-                <a href="https://wexon.pro/partner/sneyder"><img src="https://wexon.pro/img/a/vertical.gif" class="mx-auto rounded-lg shadow-lg" alt="Anuncio Wexon Vertical"/></a>
+            <div class="mt-16 text-center px-4" data-aos="fade-up">
+                <a href="https://wexon.pro/partner/sneyder" class="inline-block">
+                    <img src="https://wexon.pro/img/a/vertical.gif" 
+                         class="mx-auto rounded-lg shadow-lg max-w-full h-auto" 
+                         alt="Anuncio Wexon Vertical"/>
+                </a>
             </div>
         </section>
 
         <!-- Portfolio Section -->
         <section id="portafolio" class="py-20 scroll-mt-20" data-aos="fade-up">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl lg:text-5xl font-bold font-space mb-4">
+            <div class="text-center mb-16 px-4">
+                <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-space mb-4">
                     Mi <span class="text-gradient-purple">Portafolio</span>
                 </h3>
                 <p class="text-gray-400 max-w-2xl mx-auto">
@@ -611,8 +756,8 @@
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
-                <div class="glass rounded-3xl overflow-hidden card-hover group" data-aos="zoom-in" data-aos-delay="100">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4">
+                <div class="glass rounded-3xl overflow-hidden card-hover group portfolio-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="relative overflow-hidden">
                         <img src="https://i.postimg.cc/yxH7w4zG/Picsart-25-04-01-13-45-10-794.png" 
                              alt="Diseño de Logo Sneyder" 
@@ -629,7 +774,7 @@
                     </div>
                 </div>
                 
-                <div class="glass rounded-3xl overflow-hidden card-hover group" data-aos="zoom-in" data-aos-delay="200">
+                <div class="glass rounded-3xl overflow-hidden card-hover group portfolio-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="relative overflow-hidden">
                         <img src="https://i.postimg.cc/0Qm8W5hm/Picsart-25-04-01-13-46-26-169.jpg" 
                              alt="Branding SNEYDER ESTUDIO" 
@@ -646,7 +791,7 @@
                     </div>
                 </div>
                 
-                <div class="glass rounded-3xl overflow-hidden card-hover group" data-aos="zoom-in" data-aos-delay="300">
+                <div class="glass rounded-3xl overflow-hidden card-hover group portfolio-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="relative overflow-hidden">
                         <img src="https://i.postimg.cc/LsG93gQ2/Picsart-25-04-01-13-47-36-691.jpg" 
                              alt="Icono Tecnológico" 
@@ -663,7 +808,7 @@
                     </div>
                 </div>
                 
-                <div class="glass rounded-3xl overflow-hidden card-hover group" data-aos="zoom-in" data-aos-delay="400">
+                <div class="glass rounded-3xl overflow-hidden card-hover group portfolio-card" data-aos="zoom-in" data-aos-delay="400">
                     <div class="relative overflow-hidden">
                         <img src="https://i.postimg.cc/VNJstWRK/Picsart-25-04-01-13-59-08-989.png" 
                              alt="Logo Futurista" 
@@ -680,16 +825,21 @@
                     </div>
                 </div>
             </div>
+            
             <!-- Ad Insertion 2 -->
-            <div class="mt-16 text-center" data-aos="fade-up">
-                <a href="https://wexon.pro/partner/sneyder"><img src="https://wexon.pro/img/a/horizontal-lg.gif" class="mx-auto rounded-lg shadow-lg max-w-full h-auto" alt="Anuncio Wexon Horizontal"/></a>
+            <div class="mt-16 text-center px-4" data-aos="fade-up">
+                <a href="https://wexon.pro/partner/sneyder" class="inline-block">
+                    <img src="https://wexon.pro/img/a/horizontal-lg.gif" 
+                         class="mx-auto rounded-lg shadow-lg max-w-full h-auto" 
+                         alt="Anuncio Wexon Horizontal"/>
+                </a>
             </div>
         </section>
         
         <!-- Sponsors Section -->
         <section id="patrocinadores" class="py-20 scroll-mt-20" data-aos="fade-up">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl lg:text-5xl font-bold font-space mb-4">
+            <div class="text-center mb-16 px-4">
+                <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-space mb-4">
                     Nuestros <span class="text-gradient-pink">Patrocinadores</span>
                 </h3>
                 <p class="text-gray-400 max-w-2xl mx-auto">
@@ -698,18 +848,18 @@
             </div>
 
             <!-- Bitcoin Mining ATM App Button -->
-            <div class="text-center mb-16" data-aos="zoom-in">
+            <div class="text-center mb-16 px-4" data-aos="zoom-in">
                 <a href="minerapp.html" class="btn-primary text-white font-bold py-4 px-8 rounded-full inline-flex items-center gap-2 text-lg pulse-glow">
                     <i class="fas fa-download"></i>Bitcoin Mining ATM. Apk
                 </a>
             </div>
 
-            <div class="space-y-8 max-w-5xl mx-auto">
+            <div class="space-y-8 max-w-5xl mx-auto px-4">
                 <!-- Featured Bitcoin Mining ATM -->
-                <div class="glass-dark p-8 rounded-3xl text-center relative overflow-hidden" data-aos="zoom-in">
+                <div class="glass-dark p-6 sm:p-8 rounded-3xl text-center relative overflow-hidden" data-aos="zoom-in">
                     <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/10 to-orange-500/10 animate-pulse"></div>
                     <div class="relative z-10">
-                        <h4 class="text-2xl font-bold text-white mb-4 font-space">
+                        <h4 class="text-xl sm:text-2xl font-bold text-white mb-4 font-space">
                             <i class="fab fa-bitcoin text-yellow-400 mr-2"></i>Bitcoin Mining ATM
                         </h4>
                         <p class="text-gray-300 mb-6">Plataforma líder en minería de Bitcoin con tecnología avanzada</p>
@@ -718,7 +868,7 @@
                                  alt="Bitcoin Mining ATM" 
                                  width="468" 
                                  height="60" 
-                                 class="rounded-lg hover:scale-105 transition-transform duration-300 glow-cyan max-w-full h-auto"
+                                 class="rounded-lg hover:scale-105 transition-transform duration-300 glow-cyan max-w-full h-auto mx-auto"
                                  onerror="this.style.display='none'">
                         </a>
                     </div>
@@ -729,7 +879,7 @@
                     <h4 class="text-xl font-bold text-white mb-4 font-space">
                         <i class="fas fa-coins text-yellow-400 mr-2"></i>CoinPayU
                     </h4>
-                    <a href="https://www.coinpayu.com/?r=Sneyder2" target="_blank" rel="noopener noreferrer">
+                    <a href="https://www.coinpayu.com/?r=Sneyder2" target="_blank" rel="noopener noreferrer" class="inline-block">
                         <img title="Join coinpayu to earn!" 
                              alt="coinpayu" 
                              src="https://www.coinpayu.com/static/advertiser_banner/468X60.gif" 
@@ -781,8 +931,8 @@
 
         <!-- USDT-CLAN Section -->
         <section id="usdt-clan" class="py-20 scroll-mt-20" data-aos="fade-up">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl lg:text-5xl font-bold font-space mb-4">
+            <div class="text-center mb-16 px-4">
+                <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-space mb-4">
                     Mi Proyecto Cripto: <span class="text-gradient-cyan">USDT-CLAN</span>
                 </h3>
                 <p class="text-gray-400 max-w-2xl mx-auto">
@@ -790,56 +940,56 @@
                 </p>
             </div>
             
-            <div class="glass p-8 lg:p-12 rounded-3xl max-w-6xl mx-auto">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="glass p-6 sm:p-8 lg:p-12 rounded-3xl max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <div class="space-y-6" data-aos="fade-right">
-                        <h4 class="text-3xl font-bold text-white font-space">
+                        <h4 class="text-2xl sm:text-3xl font-bold text-white font-space">
                             Un Universo Cripto para <span class="text-gradient-pink">Latinoamérica</span>
                         </h4>
                         
-                        <p class="text-gray-300 text-lg leading-relaxed">
+                        <p class="text-gray-300 text-base sm:text-lg leading-relaxed">
                             USDT-CLAN es más que una enciclopedia de criptomonedas. Es un ecosistema completo 
                             con información detallada, historia, guías de aprendizaje y herramientas prácticas.
                         </p>
                         
                         <div class="space-y-4">
                             <div class="flex items-start gap-4 p-4 glass rounded-2xl">
-                                <i class="fas fa-coins text-yellow-400 text-2xl mt-1"></i>
+                                <i class="fas fa-coins text-yellow-400 text-xl sm:text-2xl mt-1"></i>
                                 <div>
-                                    <h5 class="font-bold text-white text-lg">Faucets y Juegos</h5>
-                                    <p class="text-gray-400">Obtén cripto gratis de forma divertida</p>
+                                    <h5 class="font-bold text-white text-base sm:text-lg">Faucets y Juegos</h5>
+                                    <p class="text-gray-400 text-sm">Obtén cripto gratis de forma divertida</p>
                                 </div>
                             </div>
                             
                             <div class="flex items-start gap-4 p-4 glass rounded-2xl">
-                                <i class="fas fa-chart-line text-green-400 text-2xl mt-1"></i>
+                                <i class="fas fa-chart-line text-green-400 text-xl sm:text-2xl mt-1"></i>
                                 <div>
-                                    <h5 class="font-bold text-white text-lg">Sección de Inversión</h5>
-                                    <p class="text-gray-400">Estrategias y análisis de mercado</p>
+                                    <h5 class="font-bold text-white text-base sm:text-lg">Sección de Inversión</h5>
+                                    <p class="text-gray-400 text-sm">Estrategias y análisis de mercado</p>
                                 </div>
                             </div>
                             
                             <div class="flex items-start gap-4 p-4 glass rounded-2xl">
-                                <i class="fas fa-ticket-alt text-purple-400 text-2xl mt-1"></i>
+                                <i class="fas fa-ticket-alt text-purple-400 text-xl sm:text-2xl mt-1"></i>
                                 <div>
-                                    <h5 class="font-bold text-white text-lg">Lotería Mensual</h5>
-                                    <p class="text-gray-400">Participa y gana premios en cripto</p>
+                                    <h5 class="font-bold text-white text-base sm:text-lg">Lotería Mensual</h5>
+                                    <p class="text-gray-400 text-sm">Participa y gana premios en cripto</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="text-center" data-aos="fade-left">
-                        <div class="glass p-8 rounded-3xl mb-8 glow-purple">
-                            <h5 class="text-2xl font-bold text-white mb-4">🎯 Enfoque Regional</h5>
-                            <p class="text-gray-300">
+                        <div class="glass p-6 sm:p-8 rounded-3xl mb-8 glow-purple">
+                            <h5 class="text-xl sm:text-2xl font-bold text-white mb-4">🎯 Enfoque Regional</h5>
+                            <p class="text-gray-300 text-sm sm:text-base">
                                 Herramientas especializadas para convertir cripto a fiat en 
                                 <span class="text-cyan-400 font-semibold">Nicaragua</span> y 
                                 <span class="text-green-400 font-semibold">Costa Rica</span>
                             </p>
                         </div>
                         
-                        <p class="text-2xl text-white font-bold mb-8">
+                        <p class="text-xl sm:text-2xl text-white font-bold mb-8">
                             😱 ¡Descubre todo lo que tengo preparado! 😱
                         </p>
                         
@@ -856,8 +1006,8 @@
 
         <!-- Music Section -->
         <section id="musica" class="py-20 scroll-mt-20" data-aos="fade-up">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl lg:text-5xl font-bold font-space mb-4">
+            <div class="text-center mb-16 px-4">
+                <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-space mb-4">
                     Proyecto <span class="text-gradient-purple">Musical</span>
                 </h3>
                 <p class="text-gray-400 max-w-2xl mx-auto">
@@ -865,8 +1015,8 @@
                 </p>
             </div>
             
-            <div class="glass p-8 rounded-3xl max-w-6xl mx-auto">
-                <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="glass p-6 sm:p-8 rounded-3xl max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <div class="grid grid-cols-2 gap-4" data-aos="fade-right">
                         <div class="relative group">
                             <img src="https://i.postimg.cc/7LJDhYHc/Picsart-25-03-18-04-25-54-861.png" 
@@ -874,7 +1024,7 @@
                                  class="rounded-3xl w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300 glow-pink"
                                  onerror="this.src='https://placehold.co/400x400/1a1a2e/e94560?text=Cover+1'">
                             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl flex items-center justify-center">
-                                <i class="fas fa-play text-white text-3xl"></i>
+                                <i class="fas fa-play text-white text-2xl sm:text-3xl"></i>
                             </div>
                         </div>
                         
@@ -884,18 +1034,18 @@
                                  class="rounded-3xl w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-300 glow-cyan"
                                  onerror="this.src='https://placehold.co/400x400/1a1a2e/e94560?text=Cover+2'">
                             <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-3xl flex items-center justify-center">
-                                <i class="fas fa-play text-white text-3xl"></i>
+                                <i class="fas fa-play text-white text-2xl sm:text-3xl"></i>
                             </div>
                         </div>
                     </div>
                     
                     <div class="text-center lg:text-left" data-aos="fade-left">
-                        <h4 class="text-3xl font-bold text-white mb-4 font-space">
+                        <h4 class="text-2xl sm:text-3xl font-bold text-white mb-4 font-space">
                             Rap Chopper por <span class="text-gradient-pink">Sneyder</span>
                         </h4>
-                        <h5 class="text-xl text-cyan-400 mb-6">ft. IA Eva</h5>
+                        <h5 class="text-lg sm:text-xl text-cyan-400 mb-6">ft. IA Eva</h5>
                         
-                        <p class="text-gray-300 mb-8 text-lg leading-relaxed">
+                        <p class="text-gray-300 mb-8 text-base sm:text-lg leading-relaxed">
                             Explora mi faceta musical con temas de rap chopper únicos, escritos por mí y 
                             interpretados por la inteligencia artificial Eva.
                         </p>
@@ -903,15 +1053,15 @@
                         <div class="space-y-4 mb-8">
                             <div class="flex items-center gap-3 justify-center lg:justify-start p-3 glass rounded-2xl">
                                 <i class="fas fa-microphone text-pink-400"></i>
-                                <span class="text-gray-300">Letras originales por Sneyder</span>
+                                <span class="text-gray-300 text-sm sm:text-base">Letras originales por Sneyder</span>
                             </div>
                             <div class="flex items-center gap-3 justify-center lg:justify-start p-3 glass rounded-2xl">
                                 <i class="fas fa-robot text-cyan-400"></i>
-                                <span class="text-gray-300">Voz interpretada por IA Eva</span>
+                                <span class="text-gray-300 text-sm sm:text-base">Voz interpretada por IA Eva</span>
                             </div>
                             <div class="flex items-center gap-3 justify-center lg:justify-start p-3 glass rounded-2xl">
                                 <i class="fas fa-music text-purple-400"></i>
-                                <span class="text-gray-300">Estilo Rap Chopper</span>
+                                <span class="text-gray-300 text-sm sm:text-base">Estilo Rap Chopper</span>
                             </div>
                         </div>
                         
@@ -936,8 +1086,8 @@
 
         <!-- Contact Section -->
         <section id="contacto" class="py-20 scroll-mt-20" data-aos="fade-up">
-            <div class="text-center mb-16">
-                <h3 class="text-4xl lg:text-5xl font-bold font-space mb-4">
+            <div class="text-center mb-16 px-4">
+                <h3 class="text-3xl sm:text-4xl lg:text-5xl font-bold font-space mb-4">
                     Ponte en <span class="text-gradient-cyan">Contacto</span>
                 </h3>
                 <p class="text-gray-400 max-w-2xl mx-auto">
@@ -945,18 +1095,18 @@
                 </p>
             </div>
             
-            <div class="max-w-4xl mx-auto">
-                <div class="glass p-8 lg:p-12 rounded-3xl text-center">
-                    <h4 class="text-2xl font-bold text-white mb-6">¿Tienes un proyecto en mente?</h4>
-                    <p class="text-gray-300 mb-8 text-lg">
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="glass p-6 sm:p-8 lg:p-12 rounded-3xl text-center">
+                    <h4 class="text-xl sm:text-2xl font-bold text-white mb-6">¿Tienes un proyecto en mente?</h4>
+                    <p class="text-gray-300 mb-8 text-base sm:text-lg">
                         Estoy aquí para ayudarte a crear algo increíble. Contactame a través de tus canales preferidos.
                     </p>
                     
-                    <div class="grid sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto mb-8">
                         <a href="https://wa.me/50672712037" 
                            target="_blank" 
                            class="bg-green-500 hover:bg-green-600 text-white font-bold py-6 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-4 text-lg glow-purple">
-                            <i class="fab fa-whatsapp text-3xl"></i>
+                            <i class="fab fa-whatsapp text-2xl sm:text-3xl"></i>
                             <div class="text-left">
                                 <div class="font-bold">WhatsApp</div>
                                 <div class="text-sm opacity-90">Respuesta rápida</div>
@@ -965,7 +1115,7 @@
                         
                         <a href="mailto:sneyder23081994@gmail.com" 
                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-6 px-8 rounded-2xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-4 text-lg glow-cyan">
-                            <i class="fas fa-envelope text-3xl"></i>
+                            <i class="fas fa-envelope text-2xl sm:text-3xl"></i>
                             <div class="text-left">
                                 <div class="font-bold">Email</div>
                                 <div class="text-sm opacity-90">Formal y detallado</div>
@@ -975,17 +1125,21 @@
                     
                     <!-- Ad Insertion 3 -->
                     <div class="my-8 text-center">
-                         <a href="https://wexon.pro/partner/sneyder"><img src="https://wexon.pro/img/a/vertical.png" class="mx-auto rounded-lg shadow-lg" alt="Anuncio Wexon Vertical PNG"/></a>
+                        <a href="https://wexon.pro/partner/sneyder" class="inline-block">
+                            <img src="https://wexon.pro/img/a/vertical.png" 
+                                 class="mx-auto rounded-lg shadow-lg max-w-full h-auto" 
+                                 alt="Anuncio Wexon Vertical PNG"/>
+                        </a>
                     </div>
                     
                     <div class="pt-8 border-t border-gray-700">
                         <p class="text-gray-400 mb-6">También puedes encontrarme en:</p>
                         <div class="flex justify-center gap-6">
                             <a href="https://usdt-clan.github.io/" target="_blank" class="text-cyan-400 hover:text-cyan-300 transition-colors transform hover:scale-110">
-                                <i class="fas fa-globe text-3xl"></i>
+                                <i class="fas fa-globe text-2xl sm:text-3xl"></i>
                             </a>
                             <a href="https://youtube.com/@sneyder-estudio?si=K1Jbf3u-VB0Y560Z" target="_blank" class="text-red-400 hover:text-red-300 transition-colors transform hover:scale-110">
-                                <i class="fab fa-youtube text-3xl"></i>
+                                <i class="fab fa-youtube text-2xl sm:text-3xl"></i>
                             </a>
                         </div>
                     </div>
@@ -995,7 +1149,7 @@
 
         <!-- Footer -->
         <footer class="text-center py-16 border-t border-pink-500/20 mt-20">
-            <div class="max-w-4xl mx-auto">
+            <div class="max-w-4xl mx-auto px-4">
                 <!-- Install App Buttons -->
                 <div id="install-footer-buttons" class="install-footer-buttons">
                     <button id="install-footer-btn" class="install-footer-btn">
@@ -1012,14 +1166,14 @@
                 </div>
                 
                 <div class="space-y-6">
-                    <p class="text-gray-400 text-lg">
+                    <p class="text-gray-400 text-base sm:text-lg">
                         &copy; 2024 <span class="text-white font-semibold">SNEYDER ESTUDIO</span>. 
                         Todos los derechos reservados.
                     </p>
-                    <p class="text-gray-500">
+                    <p class="text-gray-500 text-sm sm:text-base">
                         Diseñado y desarrollado con <span class="text-pink-400">♥</span> y mucha <span class="text-cyan-400">pasión</span>.
                     </p>
-                    <div class="flex justify-center gap-8 mt-8">
+                    <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mt-8">
                         <span class="text-gray-500 flex items-center gap-2">
                             <i class="fas fa-rocket text-pink-400"></i>
                             Innovación
@@ -1240,25 +1394,29 @@
             const dontShowAgain = document.getElementById('dont-show-again');
             const installFooterBtn = document.getElementById('install-footer-btn');
 
-            installBtn.addEventListener('click', installPWA);
-            installFooterBtn.addEventListener('click', installPWA);
+            if (installBtn) installBtn.addEventListener('click', installPWA);
+            if (installFooterBtn) installFooterBtn.addEventListener('click', installPWA);
 
-            closeInstallModal.addEventListener('click', () => {
-                hideInstallModal();
-                if (dontShowAgain.checked) {
-                    localStorage.setItem('dontShowInstall', 'true');
-                }
-            });
-
-            // Close modal when clicking outside
-            installModal.addEventListener('click', (e) => {
-                if (e.target === installModal) {
+            if (closeInstallModal) {
+                closeInstallModal.addEventListener('click', () => {
                     hideInstallModal();
-                    if (dontShowAgain.checked) {
+                    if (dontShowAgain && dontShowAgain.checked) {
                         localStorage.setItem('dontShowInstall', 'true');
                     }
-                }
-            });
+                });
+            }
+
+            // Close modal when clicking outside
+            if (installModal) {
+                installModal.addEventListener('click', (e) => {
+                    if (e.target === installModal) {
+                        hideInstallModal();
+                        if (dontShowAgain && dontShowAgain.checked) {
+                            localStorage.setItem('dontShowInstall', 'true');
+                        }
+                    }
+                });
+            }
         });
 
         // Initialize AOS
@@ -1274,18 +1432,24 @@
         const mobileNav = document.getElementById('mobile-nav');
         const closeNav = document.getElementById('close-nav');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileNav.classList.add('active');
-        });
+        if (mobileMenuBtn && mobileNav) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileNav.classList.add('active');
+            });
+        }
 
-        closeNav.addEventListener('click', () => {
-            mobileNav.classList.remove('active');
-        });
+        if (closeNav && mobileNav) {
+            closeNav.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+            });
+        }
 
         // Close mobile nav when clicking on links
         document.querySelectorAll('#mobile-nav a').forEach(link => {
             link.addEventListener('click', () => {
-                mobileNav.classList.remove('active');
+                if (mobileNav) {
+                    mobileNav.classList.remove('active');
+                }
             });
         });
 
@@ -1307,55 +1471,50 @@
         const shareBtn = document.getElementById('share-btn');
         const toast = document.getElementById('toast');
 
-        shareBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            
-            const shareData = {
-                title: 'SNEYDER ESTUDIO',
-                text: 'Descubre el portafolio de SNEYDER ESTUDIO - Diseño, Programación e Inversiones.',
-                url: window.location.href
-            };
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                
+                const shareData = {
+                    title: 'SNEYDER ESTUDIO',
+                    text: 'Descubre el portafolio de SNEYDER ESTUDIO - Diseño, Programación e Inversiones.',
+                    url: window.location.href
+                };
 
-            if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
-                try {
-                    await navigator.share(shareData);
-                } catch (err) {
-                    console.error('Error sharing:', err);
+                if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+                    try {
+                        await navigator.share(shareData);
+                    } catch (err) {
+                        console.error('Error sharing:', err);
+                    }
+                } else {
+                    // Fallback to clipboard
+                    try {
+                        await navigator.clipboard.writeText(shareData.url);
+                        showToast();
+                    } catch (err) {
+                        console.error('Error copying to clipboard:', err);
+                        // Fallback for older browsers
+                        const textArea = document.createElement('textarea');
+                        textArea.value = shareData.url;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        showToast();
+                    }
                 }
-            } else {
-                // Fallback to clipboard
-                try {
-                    await navigator.clipboard.writeText(shareData.url);
-                    showToast();
-                } catch (err) {
-                    console.error('Error copying to clipboard:', err);
-                    // Fallback for older browsers
-                    const textArea = document.createElement('textarea');
-                    textArea.value = shareData.url;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    showToast();
-                }
-            }
-        });
-
-        function showToast() {
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
+            });
         }
 
-        // Parallax effect for hero section
-        window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const hero = document.getElementById('hero');
-            if (hero && window.innerWidth > 768) {
-                hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+        function showToast() {
+            if (toast) {
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
             }
-        });
+        }
 
         // Add loading class to buttons when clicked
         document.querySelectorAll('a[href^="http"], a[href^="mailto"], a[href^="tel"]').forEach(link => {
@@ -1407,6 +1566,18 @@
                 window.scrollTo(0, window.scrollY - 1);
             }, 500);
         });
+
+        // Viewport meta tag enforcement
+        function enforceViewport() {
+            const viewport = document.querySelector('meta[name="viewport"]');
+            if (viewport) {
+                viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
+            }
+        }
+        
+        // Call on load and resize
+        window.addEventListener('load', enforceViewport);
+        window.addEventListener('resize', enforceViewport);
     </script>
 </body>
 </html>
